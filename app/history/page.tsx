@@ -219,7 +219,7 @@
 
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useHistoryStore } from '@/lib/history-store'
@@ -259,12 +259,10 @@ import {
     ArrowRight,
     Filter,
     SlidersHorizontal,
-    CalendarRange,
     Search,
     ChevronDown,
     BarChart3,
     LineChart,
-    PieChart
 } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import {
@@ -281,28 +279,91 @@ import {
 } from 'recharts';
 
 // Score indicator component with animation
+// const ScoreIndicator = ({ score }: { score: number }) => {
+//     const getColor = (value: number) => {
+//         if (value >= 85) return 'text-green-500'
+//         if (value >= 70) return 'text-blue-500'
+//         if (value >= 50) return 'text-yellow-500'
+//         return 'text-red-500'
+//     }
+//
+//     const getIcon = (value: number) => {
+//         if (value >= 70) return <Heart className="w-5 h-5" />
+//         if (value >= 50) return <Shield className="w-5 h-5" />
+//         return <AlertTriangle className="w-5 h-5" />
+//     }
+//
+//     return (
+//         <motion.div
+//             initial={{ scale: 0 }}
+//             animate={{ scale: 1 }}
+//             className={`flex items-center gap-2 ${getColor(score)}`}
+//         >
+//             {getIcon(score)}
+//             <span className="font-bold">{Math.round(score)}%</span>
+//         </motion.div>
+//     )
+// }
+
 const ScoreIndicator = ({ score }: { score: number }) => {
+    // 修改颜色方案，增加对比度
     const getColor = (value: number) => {
-        if (value >= 85) return 'text-green-500'
-        if (value >= 70) return 'text-blue-500'
-        if (value >= 50) return 'text-yellow-500'
-        return 'text-red-500'
+        if (value >= 85) return ['text-green-500', 'from-green-500/20', 'to-green-600/30', 'hover:from-green-500', 'hover:to-green-600']
+        if (value >= 70) return ['text-blue-500', 'from-blue-500/20', 'to-blue-600/30', 'hover:from-blue-500', 'hover:to-blue-600']
+        if (value >= 50) return ['text-yellow-500', 'from-yellow-500/20', 'to-yellow-600/30', 'hover:from-yellow-500', 'hover:to-yellow-600']
+        return ['text-red-500', 'from-red-500/20', 'to-red-600/30', 'hover:from-red-500', 'hover:to-red-600']
     }
 
     const getIcon = (value: number) => {
-        if (value >= 70) return <Heart className="w-5 h-5" />
-        if (value >= 50) return <Shield className="w-5 h-5" />
-        return <AlertTriangle className="w-5 h-5" />
+        const iconClass = "w-5 h-5 transition-all duration-300"
+        if (value >= 70) {
+            return <Heart className={`${iconClass} group-hover:text-white`} />
+        }
+        if (value >= 50) {
+            return <Shield className={`${iconClass} group-hover:text-white`} />
+        }
+        return (
+            <AlertTriangle
+                className={`
+                    ${iconClass}
+                    text-red-500
+                    group-hover:text-white
+                    animate-pulse
+                `}
+            />
+        )
     }
+
+    const [textColor, gradientFrom, gradientTo, hoverFrom, hoverTo] = getColor(score)
 
     return (
         <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            className={`flex items-center gap-2 ${getColor(score)}`}
+            whileHover={{ scale: 1.1 }}
+            className={`
+                flex items-center gap-2
+                px-3 py-2 rounded-full
+                bg-gradient-to-r ${gradientFrom} ${gradientTo}
+                group-hover:${hoverFrom} group-hover:${hoverTo}
+                transition-all duration-300
+                border border-transparent
+                group-hover:border-white/20
+                shadow-sm
+                group-hover:shadow-md
+                ${score < 50 ? 'group-hover:animate-pulse' : ''}
+            `}
         >
             {getIcon(score)}
-            <span className="font-bold">{Math.round(score)}%</span>
+            <span className={`
+                font-bold
+                ${textColor}
+                group-hover:text-white
+                transition-colors duration-300
+                ${score < 50 ? 'group-hover:font-extrabold' : ''}
+            `}>
+                {Math.round(score)}%
+            </span>
         </motion.div>
     )
 }
@@ -517,15 +578,64 @@ export default function HistoryPage() {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: index * 0.1 }}
+                                    whileHover={{
+                                        scale: 1.02,
+                                        transition: { duration: 0.2 }
+                                    }}
                                 >
-                                    <Card className="bg-white/50 backdrop-blur-sm border-none hover:bg-white/60 transition-colors">
+                                    {/*<Card className="bg-white/50 backdrop-blur-sm border-none hover:bg-white/60 transition-colors">*/}
+                                    <Card className={`
+                                        group
+                                        relative
+                                        overflow-hidden
+                                        bg-white/50 backdrop-blur-sm
+                                        border-none
+                                        hover:bg-gradient-to-br
+                                        hover:from-white/70
+                                        hover:to-primary/5
+                                        transition-all
+                                        duration-300
+                                        shadow-sm
+                                        hover:shadow-lg
+                                        hover:shadow-primary/10
+                                        before:absolute
+                                        before:inset-0
+                                        before:bg-gradient-to-r
+                                        before:from-transparent
+                                        before:via-primary/10
+                                        before:to-transparent
+                                        before:translate-x-[-200%]
+                                        before:opacity-0
+                                        hover:before:translate-x-[200%]
+                                        hover:before:opacity-100
+                                        before:transition-all
+                                        before:duration-1000
+                                        before:ease-in-out
+                                    `}>
                                         <CardHeader>
                                             <div className="flex justify-between items-start">
                                                 <div>
-                                                    <CardTitle className="text-xl">
+                                                    {/*<CardTitle className="text-xl">*/}
+                                                    <CardTitle className="
+                                                        text-xl
+                                                        bg-clip-text
+                                                        group-hover:text-transparent
+                                                        group-hover:bg-gradient-to-r
+                                                        group-hover:from-primary
+                                                        group-hover:to-purple-600
+                                                        transition-all
+                                                        duration-300
+                                                    ">
                                                         {assessment.friendName}
                                                     </CardTitle>
-                                                    <CardDescription>
+                                                    {/*<CardDescription>*/}
+                                                    {/*    {format(new Date(assessment.date), 'PPP')}*/}
+                                                    {/*</CardDescription>*/}
+                                                    <CardDescription className="
+                                                        transition-colors
+                                                        duration-300
+                                                        group-hover:text-primary/70
+                                                    ">
                                                         {format(new Date(assessment.date), 'PPP')}
                                                     </CardDescription>
                                                 </div>
@@ -533,24 +643,82 @@ export default function HistoryPage() {
                                             </div>
                                         </CardHeader>
                                         <CardContent>
-                                            <p className="text-muted-foreground mb-4">
+                                            {/*<p className="text-muted-foreground mb-4">*/}
+                                            {/*    {assessment.assessment.message}*/}
+                                            {/*</p>*/}
+
+                                            <p className="
+                                                text-muted-foreground
+                                                mb-4
+                                                group-hover:text-foreground/80
+                                                transition-colors
+                                                duration-300
+                                            ">
                                                 {assessment.assessment.message}
                                             </p>
-                                            <div className="flex justify-end gap-2">
+
+
+                                            {/*<div className="flex justify-end gap-2">*/}
+                                            {/*    <Button*/}
+                                            {/*        variant="outline"*/}
+                                            {/*        size="sm"*/}
+                                            {/*        onClick={() => handleDelete(assessment.id)}*/}
+                                            {/*    >*/}
+                                            {/*        <Trash className="h-4 w-4" />*/}
+                                            {/*    </Button>*/}
+                                            {/*    <Button*/}
+                                            {/*        size="sm"*/}
+                                            {/*        className="gap-2"*/}
+                                            {/*        onClick={() => router.push(`/results/${assessment.id}`)}*/}
+                                            {/*    >*/}
+                                            {/*        View Details*/}
+                                            {/*        <ArrowRight className="h-4 w-4" />*/}
+                                            {/*    </Button>*/}
+                                            {/*</div>*/}
+                                            <div className="
+                                                flex justify-end gap-2
+                                                scale-90 opacity-80
+                                                group-hover:scale-100
+                                                group-hover:opacity-100
+                                                transition-all
+                                                duration-300
+                                            ">
                                                 <Button
                                                     variant="outline"
                                                     size="sm"
+                                                    className="
+                                                        hover:bg-red-50
+                                                        hover:border-red-200
+                                                        hover:text-red-500
+                                                        transition-colors
+                                                        duration-300
+                                                    "
                                                     onClick={() => handleDelete(assessment.id)}
                                                 >
-                                                    <Trash className="h-4 w-4" />
+                                                    <Trash className="h-4 w-4"/>
                                                 </Button>
                                                 <Button
                                                     size="sm"
-                                                    className="gap-2"
+                                                    className="
+                                                        gap-2
+                                                        bg-gradient-to-r
+                                                        from-primary
+                                                        to-purple-600
+                                                        hover:from-primary/90
+                                                        hover:to-purple-700
+                                                        transition-all
+                                                        duration-300
+                                                        group/button
+                                                    "
                                                     onClick={() => router.push(`/results/${assessment.id}`)}
                                                 >
                                                     View Details
-                                                    <ArrowRight className="h-4 w-4" />
+                                                    <ArrowRight className="
+                                                        h-4 w-4
+                                                        transition-transform
+                                                        duration-300
+                                                        group-hover/button:translate-x-1
+                                                    "/>
                                                 </Button>
                                             </div>
                                         </CardContent>
@@ -563,9 +731,9 @@ export default function HistoryPage() {
                     {selectedView === 'table' && (
                         <motion.div
                             key="table"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
+                            initial={{opacity: 0}}
+                            animate={{opacity: 1}}
+                            exit={{opacity: 0}}
                         >
                             <Card className="bg-white/50 backdrop-blur-sm border-none">
                                 <Table>
