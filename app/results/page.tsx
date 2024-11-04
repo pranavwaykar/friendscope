@@ -215,20 +215,14 @@ import {
     AlertDescription,
     AlertTitle,
 } from "@/components/ui/alert"
+import { AssessmentResult } from '@/types/assessment'
 
 interface FriendInfo {
     name: string;
     notes: string;
 }
 
-interface AssessmentResultData {
-    overallScore: number;
-    categoryScores: Record<string, number>;
-    assessment: {
-        message: string;
-        recommendation: string;
-    };
-}
+type AssessmentResultData = Omit<AssessmentResult, 'id' | 'date' | 'friendName' | 'notes'>
 
 export default function ResultsPage() {
     const router = useRouter()
@@ -253,12 +247,18 @@ export default function ResultsPage() {
     const handleFriendInfoSubmit = (friendInfo: FriendInfo) => {
         setShowFriendDialog(false)
         if (assessmentResult) {
-            const assessment = {
+            const assessment: AssessmentResult = {
                 id: uuidv4(),
                 date: new Date().toISOString(),
                 friendName: friendInfo.name,
                 notes: friendInfo.notes,
-                ...assessmentResult
+                overallScore: assessmentResult.overallScore,
+                categoryScores: assessmentResult.categoryScores,
+                assessment: {
+                    threshold: assessmentResult.assessment.threshold,
+                    message: assessmentResult.assessment.message,
+                    recommendation: assessmentResult.assessment.recommendation
+                }
             }
             addAssessment(assessment)
         }
