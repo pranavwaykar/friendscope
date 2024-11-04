@@ -13,7 +13,7 @@ import { LoadingSpinner } from '@/components/ui/loading-spinner'
 import { v4 as uuidv4 } from 'uuid'
 import { FriendInfoDialog } from '@/components/FriendInfoDialog'
 import { calculateScores, getCategoryDescription } from '@/lib/assessment'
-import { ArrowRight } from 'lucide-react'
+import {AlertCircle, ArrowRight, ChartPie, RotateCcw, Share2, History} from 'lucide-react'
 import {
     Alert,
     AlertDescription,
@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/alert"
 import { AssessmentResult } from '@/types/assessment'
 import ShareDialog from '@/components/dialogs/ShareDialog';
+import { motion } from 'framer-motion'
 
 interface FriendInfo {
     name: string;
@@ -111,48 +112,193 @@ export default function ResultsPage() {
             />
 
             {/* Overall Score Card */}
-            <Card className="mb-8">
+            {/*<Card className="mb-8">*/}
+            {/*    <CardHeader>*/}
+            {/*        <CardTitle className="text-3xl font-bold text-center">Your Friendship Score</CardTitle>*/}
+            {/*    </CardHeader>*/}
+            {/*    <CardContent>*/}
+            {/*        <div className="text-center">*/}
+            {/*            <div className="text-6xl font-bold text-primary mb-4">*/}
+            {/*                {Math.round(assessmentResult.overallScore)}%*/}
+            {/*            </div>*/}
+            {/*            <p className="text-xl mb-8">*/}
+            {/*                {assessmentResult.assessment.message}*/}
+            {/*            </p>*/}
+            {/*            <Alert className="mb-6">*/}
+            {/*                <AlertTitle>Assessment Result</AlertTitle>*/}
+            {/*                <AlertDescription>*/}
+            {/*                    {assessmentResult.assessment.recommendation}*/}
+            {/*                </AlertDescription>*/}
+            {/*            </Alert>*/}
+            {/*        </div>*/}
+            {/*    </CardContent>*/}
+            {/*</Card>*/}
+
+            <Card
+                className="mb-8 overflow-hidden border-none bg-white/50 backdrop-blur-sm hover:bg-white/60 transition-all duration-300">
                 <CardHeader>
-                    <CardTitle className="text-3xl font-bold text-center">Your Friendship Score</CardTitle>
+                    <CardTitle
+                        className="text-3xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">
+                        Your Friendship Score
+                    </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-center">
-                        <div className="text-6xl font-bold text-primary mb-4">
-                            {Math.round(assessmentResult.overallScore)}%
-                        </div>
-                        <p className="text-xl mb-8">
+                    <div className="text-center space-y-6">
+                        <motion.div
+                            initial={{scale: 0}}
+                            animate={{scale: 1}}
+                            transition={{
+                                type: "spring",
+                                stiffness: 260,
+                                damping: 20
+                            }}
+                        >
+                            <div className="relative w-32 h-32 mx-auto">
+                                {/* 背景圆环 */}
+                                <div className="absolute inset-0 rounded-full border-8 border-gray-100"/>
+                                {/* 得分圆环 */}
+                                <svg className="w-full h-full transform -rotate-90">
+                                    <circle
+                                        cx="64"
+                                        cy="64"
+                                        r="56"
+                                        stroke="url(#scoreGradient)"
+                                        strokeWidth="8"
+                                        fill="none"
+                                        strokeDasharray={`${Math.round(assessmentResult.overallScore * 3.51)} 351`}
+                                        className="transition-all duration-1000 ease-out"
+                                    />
+                                    <defs>
+                                        <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" stopColor="var(--primary)"/>
+                                            <stop offset="100%" stopColor="rgb(147, 51, 234)"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                                {/* 分数文本 */}
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <motion.span
+                                        className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600"
+                                        initial={{opacity: 0, y: 20}}
+                                        animate={{opacity: 1, y: 0}}
+                                        transition={{delay: 0.5}}
+                                    >
+                                        {Math.round(assessmentResult.overallScore)}%
+                                    </motion.span>
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        <motion.p
+                            className="text-xl"
+                            initial={{opacity: 0, y: 20}}
+                            animate={{opacity: 1, y: 0}}
+                            transition={{delay: 0.7}}
+                        >
                             {assessmentResult.assessment.message}
-                        </p>
-                        <Alert className="mb-6">
-                            <AlertTitle>Assessment Result</AlertTitle>
-                            <AlertDescription>
-                                {assessmentResult.assessment.recommendation}
-                            </AlertDescription>
-                        </Alert>
+                        </motion.p>
+
+                        <motion.div
+                            initial={{opacity: 0, y: 20}}
+                            animate={{opacity: 1, y: 0}}
+                            transition={{delay: 0.9}}
+                        >
+                            <Alert className="bg-gradient-to-r from-primary/5 to-purple-600/5 border-none">
+                                <AlertTitle
+                                    className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600 font-semibold">
+                                    Assessment Result
+                                </AlertTitle>
+                                <AlertDescription className="text-foreground/80">
+                                    {assessmentResult.assessment.recommendation}
+                                </AlertDescription>
+                            </Alert>
+                        </motion.div>
                     </div>
                 </CardContent>
             </Card>
 
+
             {/* Radar Chart */}
-            <Card className="mb-8">
+            {/*<Card className="mb-8">*/}
+            {/*    <CardHeader>*/}
+            {/*        <CardTitle>Friendship Aspects</CardTitle>*/}
+            {/*    </CardHeader>*/}
+            {/*    <CardContent>*/}
+            {/*        <div className="w-full h-[400px]">*/}
+            {/*            <ResponsiveContainer width="100%" height="100%">*/}
+            {/*                <RadarChart data={chartData}>*/}
+            {/*                    <PolarGrid />*/}
+            {/*                    <PolarAngleAxis dataKey="name" />*/}
+            {/*                    <Radar*/}
+            {/*                        name="Score"*/}
+            {/*                        dataKey="value"*/}
+            {/*                        stroke="#3B82F6"*/}
+            {/*                        fill="#3B82F6"*/}
+            {/*                        fillOpacity={0.6}*/}
+            {/*                    />*/}
+            {/*                    <Tooltip*/}
+            {/*                        content={({ active, payload }) => {*/}
+            {/*                            if (active && payload && payload.length) {*/}
+            {/*                                const data = payload[0].payload as {*/}
+            {/*                                    name: string;*/}
+            {/*                                    value: number;*/}
+            {/*                                    description: string;*/}
+            {/*                                }*/}
+            {/*                                return (*/}
+            {/*                                    <div className="bg-white p-4 rounded-lg shadow-lg border">*/}
+            {/*                                        <p className="font-bold">{data.name}</p>*/}
+            {/*                                        <p className="text-sm text-blue-600">{data.value}%</p>*/}
+            {/*                                        <p className="text-sm text-gray-600">{data.description}</p>*/}
+            {/*                                    </div>*/}
+            {/*                                );*/}
+            {/*                            }*/}
+            {/*                            return null;*/}
+            {/*                        }}*/}
+            {/*                    />*/}
+            {/*                </RadarChart>*/}
+            {/*            </ResponsiveContainer>*/}
+            {/*        </div>*/}
+            {/*    </CardContent>*/}
+            {/*</Card>*/}
+
+            <Card
+                className="mb-8 border-none bg-white/50 backdrop-blur-sm hover:bg-white/60 transition-all duration-300">
                 <CardHeader>
-                    <CardTitle>Friendship Aspects</CardTitle>
+                    <motion.div
+                        initial={{opacity: 0, x: -20}}
+                        animate={{opacity: 1, x: 0}}
+                        className="flex items-center gap-3"
+                    >
+                        <div
+                            className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center">
+                            <ChartPie className="h-5 w-5 text-white"/>
+                        </div>
+                        <CardTitle>Friendship Aspects</CardTitle>
+                    </motion.div>
                 </CardHeader>
                 <CardContent>
-                    <div className="w-full h-[400px]">
+                    <motion.div
+                        className="w-full h-[400px]"
+                        initial={{opacity: 0, scale: 0.9}}
+                        animate={{opacity: 1, scale: 1}}
+                        transition={{delay: 0.3}}
+                    >
                         <ResponsiveContainer width="100%" height="100%">
                             <RadarChart data={chartData}>
-                                <PolarGrid />
-                                <PolarAngleAxis dataKey="name" />
+                                <PolarGrid strokeOpacity={0.2}/>
+                                <PolarAngleAxis
+                                    dataKey="name"
+                                    tick={{fill: 'var(--foreground)', fontSize: 12}}
+                                />
                                 <Radar
                                     name="Score"
                                     dataKey="value"
-                                    stroke="#3B82F6"
-                                    fill="#3B82F6"
-                                    fillOpacity={0.6}
+                                    stroke="url(#radarGradient)"
+                                    fill="url(#radarGradient)"
+                                    fillOpacity={0.3}
                                 />
                                 <Tooltip
-                                    content={({ active, payload }) => {
+                                    content={({active, payload}) => {
                                         if (active && payload && payload.length) {
                                             const data = payload[0].payload as {
                                                 name: string;
@@ -160,52 +306,117 @@ export default function ResultsPage() {
                                                 description: string;
                                             }
                                             return (
-                                                <div className="bg-white p-4 rounded-lg shadow-lg border">
-                                                    <p className="font-bold">{data.name}</p>
-                                                    <p className="text-sm text-blue-600">{data.value}%</p>
-                                                    <p className="text-sm text-gray-600">{data.description}</p>
+                                                <div
+                                                    className="bg-white/90 backdrop-blur-sm p-4 rounded-lg shadow-lg border">
+                                                    <h3 className="font-bold text-foreground">{data.name}</h3>
+                                                    <p className="text-primary font-semibold">{data.value}%</p>
+                                                    <p className="text-sm text-muted-foreground mt-1">{data.description}</p>
                                                 </div>
                                             );
                                         }
                                         return null;
                                     }}
                                 />
+                                <defs>
+                                    <linearGradient id="radarGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stopColor="var(--primary)"/>
+                                        <stop offset="100%" stopColor="rgb(147, 51, 234)"/>
+                                    </linearGradient>
+                                </defs>
                             </RadarChart>
                         </ResponsiveContainer>
-                    </div>
+                    </motion.div>
                 </CardContent>
             </Card>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap justify-center gap-4">
-                <Button size="lg" onClick={() => setShowShareDialog(true)}>
+            {/*<div className="flex flex-wrap justify-center gap-4">*/}
+            {/*    <Button size="lg" onClick={() => setShowShareDialog(true)}>*/}
+            {/*        Share Results*/}
+            {/*    </Button>*/}
+            {/*    <Link href="/history">*/}
+            {/*        <Button size="lg" variant="outline">*/}
+            {/*            View History*/}
+            {/*        </Button>*/}
+            {/*    </Link>*/}
+            {/*    <Link href="/">*/}
+            {/*        <Button*/}
+            {/*            size="lg"*/}
+            {/*            variant="outline"*/}
+            {/*            onClick={() => {*/}
+            {/*                resetAssessment()*/}
+            {/*            }}*/}
+            {/*        >*/}
+            {/*            Start New Assessment*/}
+            {/*        </Button>*/}
+            {/*    </Link>*/}
+            {/*    {assessmentResult.overallScore < 50 && (*/}
+            {/*        <Link href="/resources">*/}
+            {/*            <Button size="lg" variant="destructive">*/}
+            {/*                Get Help*/}
+            {/*                <ArrowRight className="ml-2 h-4 w-4" />*/}
+            {/*            </Button>*/}
+            {/*        </Link>*/}
+            {/*    )}*/}
+            {/*</div>*/}
+
+
+            <motion.div
+                className="flex flex-wrap justify-center gap-4"
+                initial={{opacity: 0, y: 20}}
+                animate={{opacity: 1, y: 0}}
+                transition={{delay: 1.1}}
+            >
+                <Button
+                    size="lg"
+                    onClick={() => setShowShareDialog(true)}
+                    className="group relative overflow-hidden bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-700"
+                >
+                    <Share2 className="mr-2 h-5 w-5"/>
                     Share Results
+                    <div
+                        className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"/>
                 </Button>
+
                 <Link href="/history">
-                    <Button size="lg" variant="outline">
+                    <Button
+                        size="lg"
+                        variant="outline"
+                        className="group border-primary/20 hover:border-primary/40"
+                    >
+                        <History className="mr-2 h-5 w-5 transition-transform group-hover:rotate-180 duration-500"/>
                         View History
                     </Button>
                 </Link>
+
                 <Link href="/">
                     <Button
                         size="lg"
                         variant="outline"
-                        onClick={() => {
-                            resetAssessment()
-                        }}
+                        onClick={() => resetAssessment()}
+                        className="group"
                     >
+                        <RotateCcw className="mr-2 h-5 w-5 transition-transform group-hover:rotate-180 duration-500"/>
                         Start New Assessment
                     </Button>
                 </Link>
+
                 {assessmentResult.overallScore < 50 && (
                     <Link href="/resources">
-                        <Button size="lg" variant="destructive">
+                        <Button
+                            size="lg"
+                            variant="destructive"
+                            className="group animate-pulse hover:animate-none"
+                        >
+                            <AlertCircle className="mr-2 h-5 w-5"/>
                             Get Help
-                            <ArrowRight className="ml-2 h-4 w-4" />
+                            <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1"/>
                         </Button>
                     </Link>
                 )}
-            </div>
+            </motion.div>
+
+
             <ShareDialog
                 open={showShareDialog}
                 onOpenChange={setShowShareDialog}
