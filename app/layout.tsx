@@ -7,6 +7,9 @@ import { Footer } from '@/components/layout/Footer'
 export const metadata: Metadata = {
   title: 'FriendScope - Evaluate Your Friendships',
   description: 'A simple and intuitive tool to assess and improve your friendships through scientific questionnaires.',
+    icons: {
+        icon: '/friendscope-logo.svg',
+    },
 }
 
 export default function RootLayout({
