@@ -1,4 +1,4 @@
-# FriendScope (友谱)
+# FriendScope
 
 FriendScope is a modern web application designed to help individuals evaluate and strengthen their friendships through scientific assessment and personalized insights. Built with Next.js and TypeScript, it offers a user-friendly interface for examining different aspects of interpersonal relationships.
 

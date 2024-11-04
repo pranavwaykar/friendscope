@@ -5,7 +5,7 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
-  title: 'FriendScope (友谱) - Evaluate Your Friendships',
+  title: 'FriendScope - Evaluate Your Friendships',
   description: 'A simple and intuitive tool to assess and improve your friendships through scientific questionnaires.',
 }
 

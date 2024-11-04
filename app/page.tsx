@@ -6,7 +6,7 @@ export default function Home() {
     return (
         <div className="container mx-auto px-4 py-8 md:py-16">
             <section className="text-center mb-8 md:mb-16">
-                <h1 className="text-3xl md:text-4xl font-bold mb-4">Welcome to FriendScope (友谱)</h1>
+                <h1 className="text-3xl md:text-4xl font-bold mb-4">Welcome to FriendScope</h1>
                 <p className="text-lg md:text-xl mb-6 md:mb-8">Evaluate your friendships through scientific questionnaires</p>
                 <Link href="/assess">
                     <Button size="lg" className="w-full md:w-auto">Start Assessment</Button>

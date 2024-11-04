@@ -3,14 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 export default function AboutPage() {
     return (
         <div className="container mx-auto px-4 py-16 max-w-3xl">
-            <h1 className="text-3xl font-bold mb-8 text-center">About FriendScope (友谱)</h1>
+            <h1 className="text-3xl font-bold mb-8 text-center">About FriendScope</h1>
 
             <Card className="mb-8">
                 <CardHeader>
                     <CardTitle>Our Mission</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <p>FriendScope (友谱) is dedicated to helping people understand and improve their friendships through scientific assessment and personalized insights. We believe that strong, healthy friendships are fundamental to personal well-being and happiness.</p>
+                    <p>FriendScope is dedicated to helping people understand and improve their friendships through scientific assessment and personalized insights. We believe that strong, healthy friendships are fundamental to personal well-being and happiness.</p>
                 </CardContent>
             </Card>
 
