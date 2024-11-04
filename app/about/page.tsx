@@ -163,32 +163,79 @@ export default function AboutPage() {
             </div>
 
             {/* Benefits Section */}
+            {/*<div className="container px-4 py-16">*/}
+            {/*    <Card className="border-none bg-white/50 backdrop-blur-sm">*/}
+            {/*        <CardHeader className="space-y-0 pb-2">*/}
+            {/*            <CardTitle className="text-2xl text-center mb-0">Why Choose FriendScope?</CardTitle>*/}
+            {/*            <div className="w-64 h-12 mx-auto -mt-16">*/}
+            {/*                <LottieAnimation*/}
+            {/*                    path="/Lottie/wave-line.json"*/}
+            {/*                    className="w-full h-full"*/}
+            {/*                />*/}
+            {/*            </div>*/}
+            {/*        </CardHeader>*/}
+            {/*        <CardContent>*/}
+            {/*            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">*/}
+            {/*                {benefits.map((benefit, index) => (*/}
+            {/*                    <motion.div*/}
+            {/*                        key={benefit}*/}
+            {/*                        initial={{ opacity: 0, x: -20 }}*/}
+            {/*                        whileInView={{ opacity: 1, x: 0 }}*/}
+            {/*                        transition={{ delay: index * 0.1 }}*/}
+            {/*                        viewport={{ once: true }}*/}
+            {/*                        className="flex items-center gap-3 p-4 rounded-lg hover:bg-white/60 transition-colors"*/}
+            {/*                    >*/}
+            {/*                        <div className="flex-shrink-0">*/}
+            {/*                            <Check className="w-5 h-5 text-primary" />*/}
+            {/*                        </div>*/}
+            {/*                        <span>{benefit}</span>*/}
+            {/*                    </motion.div>*/}
+            {/*                ))}*/}
+            {/*            </div>*/}
+            {/*        </CardContent>*/}
+            {/*    </Card>*/}
+            {/*</div>*/}
+
+            {/* Benefits Section */}
             <div className="container px-4 py-16">
                 <Card className="border-none bg-white/50 backdrop-blur-sm">
-                    <CardHeader>
-                        <CardTitle className="text-2xl text-center">Why Choose FriendScope?</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {benefits.map((benefit, index) => (
-                                <motion.div
-                                    key={benefit}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: index * 0.1 }}
-                                    viewport={{ once: true }}
-                                    className="flex items-center gap-3 p-4 rounded-lg hover:bg-white/60 transition-colors"
-                                >
-                                    <div className="flex-shrink-0">
-                                        <Check className="w-5 h-5 text-primary" />
-                                    </div>
-                                    <span>{benefit}</span>
-                                </motion.div>
-                            ))}
+                    <div className="flex flex-col items-center relative"> {/* 新的flex容器 */}
+                        <CardHeader className="pb-16 pt-2"> {/* 调整padding */}
+                            <CardTitle className="text-2xl text-center">
+                                Why Choose FriendScope?
+                            </CardTitle>
+                        </CardHeader>
+
+                        <div className="w-64 h-8 absolute -mt-16"> {/* 调整大小和位置 */}
+                            <LottieAnimation
+                                path="/Lottie/wave-line.json"
+                                className="w-full h-full"
+                            />
                         </div>
-                    </CardContent>
+
+                        <CardContent className="w-full pt-4"> {/* 调整内容区域 */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {benefits.map((benefit, index) => (
+                                    <motion.div
+                                        key={benefit}
+                                        initial={{ opacity: 0, x: -20 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: index * 0.1 }}
+                                        viewport={{ once: true }}
+                                        className="flex items-center gap-3 p-4 rounded-lg hover:bg-white/60 transition-colors"
+                                    >
+                                        <div className="flex-shrink-0">
+                                            <Check className="w-5 h-5 text-primary" />
+                                        </div>
+                                        <span>{benefit}</span>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </CardContent>
+                    </div>
                 </Card>
             </div>
+
 
             {/* CTA Section */}
             <div className="container px-4 py-16">
