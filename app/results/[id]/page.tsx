@@ -343,7 +343,7 @@ export default function DetailedResultPage() {
                     </CardContent>
                 </Card>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="space-y-4">
                     <BarMetric
                         data={categoryData}
                         title="Category Scores"
