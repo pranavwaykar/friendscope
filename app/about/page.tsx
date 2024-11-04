@@ -126,12 +126,86 @@ export default function AboutPage() {
                     </p>
 
                     {/* Main Animation */}
-                    <div className="w-64 h-64 mx-auto mb-12">
-                        <LottieAnimation
-                            path="/Lottie/interactive-star.json"
-                            className="w-full h-full"
+                    {/*<div className="w-64 h-64 mx-auto mb-12">*/}
+                    {/*    <LottieAnimation*/}
+                    {/*        path="/Lottie/interactive-star.json"*/}
+                    {/*        className="w-full h-full"*/}
+                    {/*    />*/}
+                    {/*</div>*/}
+
+                    {/* Main Animation */}
+                    <motion.div
+                        className="w-64 h-64 mx-auto mb-12 relative"
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{
+                            scale: 1,
+                            opacity: 1,
+                            transition: {
+                                duration: 0.8,
+                                ease: "easeOut"
+                            }
+                        }}
+                    >
+                        {/* 背景光晕效果 */}
+                        <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-primary/20 to-purple-600/20 rounded-full blur-xl"
+                            animate={{
+                                scale: [1, 1.2, 1],
+                                opacity: [0.5, 0.8, 0.5]
+                            }}
+                            transition={{
+                                duration: 3,
+                                repeat: Infinity,
+                                ease: "easeInOut"
+                            }}
                         />
-                    </div>
+
+                        <motion.div
+                            className="relative cursor-pointer"
+                            whileHover={{
+                                scale: 1.1,
+                                rotate: 5,
+                                transition: {
+                                    type: "spring",
+                                    stiffness: 300,
+                                    damping: 10
+                                }
+                            }}
+                            whileTap={{
+                                scale: 0.9,
+                                rotate: -5,
+                                transition: {
+                                    type: "spring",
+                                    stiffness: 400,
+                                    damping: 10
+                                }
+                            }}
+                            animate={{
+                                y: [0, -10, 0],
+                            }}
+                            transition={{
+                                duration: 2,
+                                repeat: Infinity,
+                                ease: "easeInOut"
+                            }}
+                        >
+                            <LottieAnimation
+                                path="/Lottie/interactive-star.json"
+                                className="w-full h-full"
+                            />
+
+                            {/* 点击时的涟漪效果 */}
+                            <motion.div
+                                className="absolute inset-0 bg-primary/10 rounded-full"
+                                whileTap={{
+                                    scale: [1, 2],
+                                    opacity: [0.5, 0],
+                                    transition: { duration: 0.5 }
+                                }}
+                            />
+                        </motion.div>
+                    </motion.div>
+
                 </motion.div>
             </div>
 
