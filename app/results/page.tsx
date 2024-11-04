@@ -9,7 +9,7 @@ import { useAssessmentStore } from '@/lib/store'
 import { useHistoryStore } from '@/lib/history-store'
 import { RadarChart, PolarGrid, PolarAngleAxis, Radar, ResponsiveContainer, Tooltip } from 'recharts'
 import { LoadingSpinner } from '@/components/ui/loading-spinner'
-import { useToast } from "@/hooks/use-toast"
+// import { useToast } from "@/hooks/use-toast"
 import { v4 as uuidv4 } from 'uuid'
 import { FriendInfoDialog } from '@/components/FriendInfoDialog'
 import { calculateScores, getCategoryDescription } from '@/lib/assessment'
@@ -36,7 +36,7 @@ export default function ResultsPage() {
     const [isLoading, setIsLoading] = useState(true)
     const [assessmentResult, setAssessmentResult] = useState<AssessmentResultData | null>(null)
     const [showFriendDialog, setShowFriendDialog] = useState(true)
-    const { toast } = useToast()
+    // const { toast } = useToast()
     const [showShareDialog, setShowShareDialog] = useState(false);
     const [friendName, setFriendName] = useState<string>('');
 
@@ -72,21 +72,21 @@ export default function ResultsPage() {
         }
     }
 
-    const handleShare = () => {
-        const shareUrl = window.location.href
-        navigator.clipboard.writeText(shareUrl).then(() => {
-            toast({
-                title: "Link Copied!",
-                description: "The link to your results has been copied to your clipboard.",
-            })
-        }).catch(() => {
-            toast({
-                title: "Failed to copy",
-                description: "An error occurred while trying to copy the link.",
-                variant: "destructive",
-            })
-        })
-    }
+    // const handleShare = () => {
+    //     const shareUrl = window.location.href
+    //     navigator.clipboard.writeText(shareUrl).then(() => {
+    //         toast({
+    //             title: "Link Copied!",
+    //             description: "The link to your results has been copied to your clipboard.",
+    //         })
+    //     }).catch(() => {
+    //         toast({
+    //             title: "Failed to copy",
+    //             description: "An error occurred while trying to copy the link.",
+    //             variant: "destructive",
+    //         })
+    //     })
+    // }
 
     if (isLoading || !assessmentResult) {
         return (

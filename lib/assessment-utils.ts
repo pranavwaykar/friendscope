@@ -29,7 +29,7 @@ export const generatePDF = (assessment: AssessmentResult) => {
     doc.setFontSize(12);
 
     let yPosition = 130;
-    Object.entries(assessment.categoryScores).forEach(([category, score], index) => {
+    Object.entries(assessment.categoryScores).forEach(([category, score]) => {
         if (yPosition > 250) {
             doc.addPage();
             yPosition = 20;

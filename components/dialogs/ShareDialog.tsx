@@ -123,6 +123,25 @@ export default function ShareDialog({ open, onOpenChange, score, friendName }: S
 
     const shareText = `I just assessed my friendship with ${friendName} using FriendScope and got a score of ${Math.round(score)}%! Check out your friendships too!`;
 
+    // const handleCopy = async () => {
+    //     try {
+    //         await navigator.clipboard.writeText(url);
+    //         setCopied(true);
+    //         toast({
+    //             title: "Link copied!",
+    //             description: "The link has been copied to your clipboard.",
+    //         });
+    //         // Reset the copied state after 2 seconds
+    //         setTimeout(() => setCopied(false), 2000);
+    //     } catch (err) {
+    //         toast({
+    //             title: "Failed to copy",
+    //             description: "Please try again",
+    //             variant: "destructive",
+    //         });
+    //     }
+    // };
+
     const handleCopy = async () => {
         try {
             await navigator.clipboard.writeText(url);
@@ -131,9 +150,8 @@ export default function ShareDialog({ open, onOpenChange, score, friendName }: S
                 title: "Link copied!",
                 description: "The link has been copied to your clipboard.",
             });
-            // Reset the copied state after 2 seconds
             setTimeout(() => setCopied(false), 2000);
-        } catch (err) {
+        } catch (_error) { // Rename to _error to indicate intentionally unused
             toast({
                 title: "Failed to copy",
                 description: "Please try again",

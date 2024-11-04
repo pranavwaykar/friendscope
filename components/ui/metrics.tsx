@@ -10,7 +10,6 @@ import {
     CartesianGrid,
     Tooltip,
     Legend,
-    TooltipProps
 } from "recharts";
 
 interface MetricProps {

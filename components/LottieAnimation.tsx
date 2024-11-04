@@ -34,11 +34,24 @@ interface LottieAnimationProps extends Partial<LottieComponentProps> {
     className?: string;
 }
 
+// Define a type for Lottie animation data
+interface LottieAnimationData {
+    v: string;
+    fr: number;
+    ip: number;
+    op: number;
+    w: number;
+    h: number;
+    nm: string;
+    ddd: number;
+    assets: unknown[];
+    layers: unknown[];
+}
+
 export const LottieAnimation = ({ path, className, ...props }: LottieAnimationProps) => {
-    const [animationData, setAnimationData] = useState<any>(null);
+    const [animationData, setAnimationData] = useState<LottieAnimationData | null>(null);
 
     useEffect(() => {
-        // Dynamically import the animation data
         fetch(path)
             .then(response => response.json())
             .then(data => setAnimationData(data))
@@ -46,7 +59,7 @@ export const LottieAnimation = ({ path, className, ...props }: LottieAnimationPr
     }, [path]);
 
     if (!animationData) {
-        return null; // Or a loading state
+        return null;
     }
 
     return (

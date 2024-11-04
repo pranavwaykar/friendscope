@@ -412,7 +412,6 @@ import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { useAssessmentStore } from '@/lib/store';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
-import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import { LottieAnimation } from '@/components/LottieAnimation';
@@ -518,7 +517,6 @@ export default function AssessmentPage() {
     const router = useRouter();
     const {questions, currentQuestionIndex, answers, setAnswer, nextQuestion, resetAssessment} = useAssessmentStore();
     const [isLoading, setIsLoading] = useState(true);
-    const { toast } = useToast();
     const [showSeeResults, setShowSeeResults] = useState(false);
     const [selectedAnswer, setSelectedAnswer] = useState('');
 
