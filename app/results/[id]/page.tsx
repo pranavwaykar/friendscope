@@ -18,6 +18,7 @@ import { format } from 'date-fns'
 import { Download, Share2, ArrowLeft, Printer } from 'lucide-react'
 import { useToast } from "@/hooks/use-toast"
 import { AssessmentResult } from '@/types/assessment'
+import { generatePDF, shareAssessment } from '@/lib/assessment-utils';
 
 const CATEGORY_DETAILS = {
     "Trust & Honesty": {
@@ -222,6 +223,7 @@ const CATEGORY_DETAILS = {
     }
 }
 
+
 export default function DetailedResultPage() {
     const params = useParams()
     const router = useRouter()
@@ -242,22 +244,43 @@ export default function DetailedResultPage() {
 
     if (!assessment) return null
 
-    const handleDownloadPDF = () => {
-        // PDF generation logic will be implemented later
-        toast({
-            title: "Coming Soon",
-            description: "PDF download feature will be available soon!"
-        })
-    }
 
-    const handleShare = () => {
-        const url = window.location.href
-        navigator.clipboard.writeText(url)
-        toast({
-            title: "Link Copied",
-            description: "Assessment link has been copied to clipboard"
-        })
-    }
+
+    const handleDownloadPDF = () => {
+        if (assessment) {
+            generatePDF(assessment);
+        }
+    };
+
+    const handleShare = async () => {
+        if (assessment) {
+            const shared = await shareAssessment(assessment);
+            if (!shared) {
+                navigator.clipboard.writeText(window.location.href);
+                toast({
+                    title: "Link Copied",
+                    description: "Assessment link has been copied to clipboard"
+                });
+            }
+        }
+    };
+
+    // const handleDownloadPDF = () => {
+    //     // PDF generation logic will be implemented later
+    //     toast({
+    //         title: "Coming Soon",
+    //         description: "PDF download feature will be available soon!"
+    //     })
+    // }
+    //
+    // const handleShare = () => {
+    //     const url = window.location.href
+    //     navigator.clipboard.writeText(url)
+    //     toast({
+    //         title: "Link Copied",
+    //         description: "Assessment link has been copied to clipboard"
+    //     })
+    // }
 
     const handlePrint = () => {
         window.print()

@@ -44,17 +44,12 @@ export function LineMetric({ data, title, description }: MetricProps) {
                 {description && <CardDescription>{description}</CardDescription>}
             </CardHeader>
             <CardContent>
-                <div className="h-[200px]">
+                <div className="h-[300px]">
                     <ResponsiveContainer width="100%" height="100%">
                         <LineChart data={data}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis
                                 dataKey="date"
-                                label={{
-                                    value: 'Categories',
-                                    position: 'insideBottom',
-                                    offset: -5
-                                }}
                             />
                             <YAxis
                                 label={{

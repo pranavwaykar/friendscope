@@ -20,6 +20,7 @@ import {
     AlertTitle,
 } from "@/components/ui/alert"
 import { AssessmentResult } from '@/types/assessment'
+import ShareDialog from '@/components/dialogs/ShareDialog';
 
 interface FriendInfo {
     name: string;
@@ -36,6 +37,8 @@ export default function ResultsPage() {
     const [assessmentResult, setAssessmentResult] = useState<AssessmentResultData | null>(null)
     const [showFriendDialog, setShowFriendDialog] = useState(true)
     const { toast } = useToast()
+    const [showShareDialog, setShowShareDialog] = useState(false);
+    const [friendName, setFriendName] = useState<string>('');
 
     useEffect(() => {
         if (Object.keys(answers).length === 0) {
@@ -50,6 +53,7 @@ export default function ResultsPage() {
 
     const handleFriendInfoSubmit = (friendInfo: FriendInfo) => {
         setShowFriendDialog(false)
+        setFriendName(friendInfo.name);
         if (assessmentResult) {
             const assessment: AssessmentResult = {
                 id: uuidv4(),
@@ -174,7 +178,10 @@ export default function ResultsPage() {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap justify-center gap-4">
-                <Button size="lg" onClick={handleShare}>
+                {/*<Button size="lg" onClick={handleShare}>*/}
+                {/*    Share Results*/}
+                {/*</Button>*/}
+                <Button size="lg" onClick={() => setShowShareDialog(true)}>
                     Share Results
                 </Button>
                 <Link href="/history">
@@ -202,6 +209,12 @@ export default function ResultsPage() {
                     </Link>
                 )}
             </div>
+            <ShareDialog
+                open={showShareDialog}
+                onOpenChange={setShowShareDialog}
+                score={assessmentResult.overallScore}
+                friendName={friendName || 'my friend'} // 添加默认值以防friendName为空
+            />
         </div>
     )
 }
