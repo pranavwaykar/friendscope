@@ -6,21 +6,6 @@ import { useHistoryStore } from '@/lib/history-store'
 import { BarMetric, LineMetric } from '@/components/ui/metrics'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-// import {
-//     Radar,
-//     RadarChart,
-//     PolarGrid,
-//     PolarAngleAxis,
-//     PolarRadiusAxis,
-//     ResponsiveContainer,
-//     LineChart,
-//     Line,
-//     XAxis,
-//     YAxis,
-//     CartesianGrid,
-//     Tooltip,
-//     Legend,
-// } from 'recharts'
 import {
     Table,
     TableBody,
@@ -32,7 +17,6 @@ import {
 import { format } from 'date-fns'
 import { Download, Share2, ArrowLeft, Printer } from 'lucide-react'
 import { useToast } from "@/hooks/use-toast"
-// import { ComparisonChart } from '@/components/ComparisonChart'
 import { AssessmentResult } from '@/types/assessment'
 
 const CATEGORY_DETAILS = {
@@ -56,7 +40,186 @@ const CATEGORY_DETAILS = {
             ]
         }
     },
-    // Add details for other categories...
+    "Emotional Support": {
+        description: "Evaluates the quality of emotional connection and support",
+        recommendations: {
+            low: [
+                "Practice active listening without judgment",
+                "Show more empathy during difficult times",
+                "Reach out more frequently to check on their well-being"
+            ],
+            medium: [
+                "Deepen emotional conversations",
+                "Share your own vulnerabilities",
+                "Celebrate their successes more actively"
+            ],
+            high: [
+                "Continue being emotionally available",
+                "Help others learn from your supportive friendship",
+                "Maintain the balance of giving and receiving support"
+            ]
+        }
+    },
+    "Communication": {
+        description: "Assesses the effectiveness and depth of communication",
+        recommendations: {
+            low: [
+                "Practice more active listening",
+                "Schedule regular check-ins",
+                "Work on expressing feelings more clearly"
+            ],
+            medium: [
+                "Explore deeper conversation topics",
+                "Practice giving and receiving feedback",
+                "Create safe spaces for difficult discussions"
+            ],
+            high: [
+                "Maintain open communication channels",
+                "Share communication strategies that work",
+                "Continue fostering meaningful dialogue"
+            ]
+        }
+    },
+    "Boundaries": {
+        description: "Examines respect for personal limits and space",
+        recommendations: {
+            low: [
+                "Clearly communicate your personal boundaries",
+                "Learn to say 'no' when necessary",
+                "Respect others' time and space"
+            ],
+            medium: [
+                "Review and adjust boundaries as needed",
+                "Practice healthy boundary-setting",
+                "Discuss expectations openly"
+            ],
+            high: [
+                "Continue respecting established boundaries",
+                "Model healthy boundary-setting for others",
+                "Help others understand the importance of boundaries"
+            ]
+        }
+    },
+    "Reciprocity": {
+        description: "Measures the balance of give and take in the friendship",
+        recommendations: {
+            low: [
+                "Track the balance of giving and receiving",
+                "Communicate your needs more clearly",
+                "Look for opportunities to reciprocate"
+            ],
+            medium: [
+                "Find new ways to contribute to the friendship",
+                "Express appreciation more often",
+                "Balance asking for and offering help"
+            ],
+            high: [
+                "Maintain the healthy balance",
+                "Share strategies for maintaining reciprocity",
+                "Continue mutual support patterns"
+            ]
+        }
+    },
+    "Conflict Resolution": {
+        description: "Evaluates how conflicts and disagreements are handled",
+        recommendations: {
+            low: [
+                "Address conflicts promptly and calmly",
+                "Practice active listening during disagreements",
+                "Focus on solutions rather than blame"
+            ],
+            medium: [
+                "Develop better conflict resolution skills",
+                "Practice compromise and understanding",
+                "Learn from past conflicts"
+            ],
+            high: [
+                "Continue using effective resolution strategies",
+                "Share conflict resolution techniques",
+                "Help others learn from your approach"
+            ]
+        }
+    },
+    "Growth & Development": {
+        description: "Assesses how the friendship supports personal growth",
+        recommendations: {
+            low: [
+                "Share goals and aspirations",
+                "Encourage each other's personal development",
+                "Create opportunities for mutual learning"
+            ],
+            medium: [
+                "Set mutual growth goals",
+                "Share resources and opportunities",
+                "Celebrate personal achievements together"
+            ],
+            high: [
+                "Continue supporting each other's growth",
+                "Share success stories and lessons learned",
+                "Inspire others through your example"
+            ]
+        }
+    },
+    "Values Alignment": {
+        description: "Examines the compatibility of core values and principles",
+        recommendations: {
+            low: [
+                "Discuss core values openly",
+                "Identify areas of common ground",
+                "Respect differences in perspectives"
+            ],
+            medium: [
+                "Explore shared values more deeply",
+                "Build on common principles",
+                "Address value conflicts constructively"
+            ],
+            high: [
+                "Continue living shared values",
+                "Strengthen value-based decisions",
+                "Help others understand value alignment"
+            ]
+        }
+    },
+    "Respect & Recognition": {
+        description: "Measures mutual respect and appreciation",
+        recommendations: {
+            low: [
+                "Show more appreciation for differences",
+                "Acknowledge contributions more often",
+                "Practice active recognition"
+            ],
+            medium: [
+                "Find new ways to show respect",
+                "Express gratitude regularly",
+                "Celebrate unique qualities"
+            ],
+            high: [
+                "Maintain high levels of mutual respect",
+                "Continue showing appreciation",
+                "Model respectful behavior for others"
+            ]
+        }
+    },
+    "Reliability": {
+        description: "Evaluates consistency and dependability in the friendship",
+        recommendations: {
+            low: [
+                "Follow through on commitments",
+                "Communicate when unable to meet obligations",
+                "Be more consistent in response times"
+            ],
+            medium: [
+                "Strengthen reliability patterns",
+                "Build better accountability",
+                "Plan and coordinate more effectively"
+            ],
+            high: [
+                "Maintain consistent reliability",
+                "Share strategies for being dependable",
+                "Help others develop reliability"
+            ]
+        }
+    }
 }
 
 export default function DetailedResultPage() {
@@ -65,24 +228,6 @@ export default function DetailedResultPage() {
     const { toast } = useToast()
     const { getAssessment, assessments } = useHistoryStore()
     const [assessment, setAssessment] = useState<AssessmentResult | undefined>()
-    // const [comparisonData, setComparisonData] = useState<any[]>([])
-
-    // useEffect(() => {
-    //     if (params.id) {
-    //         const result = getAssessment(params.id as string)
-    //         if (result) {
-    //             setAssessment(result)
-    //             // Get previous assessments for the same friend
-    //             const previousAssessments = assessments
-    //                 .filter(a => a.friendName === result.friendName)
-    //                 .slice(0, 5)
-    //                 .reverse()
-    //             setComparisonData(previousAssessments)
-    //         } else {
-    //             router.push('/history')
-    //         }
-    //     }
-    // }, [params.id, getAssessment, router])
 
     useEffect(() => {
         if (params.id) {
@@ -125,11 +270,6 @@ export default function DetailedResultPage() {
         if (score >= 60) return details.recommendations.medium
         return details.recommendations.low
     }
-
-    // const chartData = Object.entries(assessment.categoryScores).map(([name, value]) => ({
-    //     category: name,
-    //     score: Math.round(value)
-    // }))
 
     const categoryData = Object.entries(assessment.categoryScores).map(([name, value]) => ({
         date: name,
@@ -203,30 +343,6 @@ export default function DetailedResultPage() {
                     </CardContent>
                 </Card>
 
-                {/* Radar Chart */}
-                {/*<Card>*/}
-                {/*    <CardHeader>*/}
-                {/*        <CardTitle>Category Breakdown</CardTitle>*/}
-                {/*    </CardHeader>*/}
-                {/*    <CardContent>*/}
-                {/*        <div className="h-[400px]">*/}
-                {/*            <ResponsiveContainer width="100%" height="100%">*/}
-                {/*                <RadarChart data={chartData}>*/}
-                {/*                    <PolarGrid />*/}
-                {/*                    <PolarAngleAxis dataKey="category" />*/}
-                {/*                    <PolarRadiusAxis domain={[0, 100]} />*/}
-                {/*                    <Radar*/}
-                {/*                        name="Score"*/}
-                {/*                        dataKey="score"*/}
-                {/*                        fill="#3b82f6"*/}
-                {/*                        fillOpacity={0.6}*/}
-                {/*                    />*/}
-                {/*                </RadarChart>*/}
-                {/*            </ResponsiveContainer>*/}
-                {/*        </div>*/}
-                {/*    </CardContent>*/}
-                {/*</Card>*/}
-
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                     <BarMetric
                         data={categoryData}
@@ -241,20 +357,6 @@ export default function DetailedResultPage() {
                         />
                     )}
                 </div>
-
-                {/* Trend Analysis */}
-                {/*{comparisonData.length > 1 && (*/}
-                {/*    <Card>*/}
-                {/*        <CardHeader>*/}
-                {/*            <CardTitle>Score Trend</CardTitle>*/}
-                {/*        </CardHeader>*/}
-                {/*        <CardContent>*/}
-                {/*            <div className="h-[300px]">*/}
-                {/*                <ComparisonChart data={comparisonData}/>*/}
-                {/*            </div>*/}
-                {/*        </CardContent>*/}
-                {/*    </Card>*/}
-                {/*)}*/}
 
                 {/* Detailed Recommendations */}
                 <Card>

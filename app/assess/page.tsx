@@ -27,21 +27,29 @@ export default function AssessmentPage() {
     const { questions, currentQuestionIndex, answers, setAnswer, nextQuestion, previousQuestion, resetAssessment } = useAssessmentStore()
     const [isLoading, setIsLoading] = useState(true)
     const { toast } = useToast()
+    const [currentAnswer, setCurrentAnswer] = useState<string>('')
 
     useEffect(() => {
         resetAssessment()
         setIsLoading(false)
     }, [resetAssessment])
 
+    useEffect(() => {
+        // 当切换问题时，更新currentAnswer为当前问题的答案
+        const currentQuestion = questions[currentQuestionIndex]
+        setCurrentAnswer(answers[currentQuestion.id] || '')
+    }, [currentQuestionIndex, answers, questions])
+
     const currentQuestion = questions[currentQuestionIndex]
     const progress = ((currentQuestionIndex + 1) / questions.length) * 100
 
     const handleAnswer = (answer: string) => {
+        setCurrentAnswer(answer)
         setAnswer(currentQuestion.id, answer)
     }
 
     const handleNext = () => {
-        if (!answers[currentQuestion.id]) {
+        if (!currentAnswer) {
             toast({
                 title: "Please select an answer",
                 description: "You need to choose an option before moving to the next question.",
@@ -79,8 +87,8 @@ export default function AssessmentPage() {
                     <div className="space-y-8">
                         <h2 className="text-xl text-center mb-8">{currentQuestion.text}</h2>
                         <RadioGroup
+                            value={currentAnswer}
                             onValueChange={handleAnswer}
-                            value={answers[currentQuestion.id]}
                             className="grid grid-cols-2 gap-8 md:flex md:gap-4"
                         >
                             <div className="flex justify-between items-center w-full">
