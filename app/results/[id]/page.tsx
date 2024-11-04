@@ -3,22 +3,14 @@
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { useHistoryStore } from '@/lib/history-store'
-import { BarMetric, LineMetric } from '@/components/ui/metrics'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent} from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
 import { format } from 'date-fns'
-import { Download, Share2, ArrowLeft, Printer } from 'lucide-react'
+import {Download, Share2, ArrowLeft, Printer, Lightbulb, Target} from 'lucide-react'
 import { useToast } from "@/hooks/use-toast"
 import { AssessmentResult } from '@/types/assessment'
 import { generatePDF, shareAssessment } from '@/lib/assessment-utils';
+import { motion} from 'framer-motion'
 
 const CATEGORY_DETAILS = {
     "Trust & Honesty": {
@@ -277,126 +269,356 @@ export default function DetailedResultPage() {
         return details.recommendations.low
     }
 
-    const categoryData = Object.entries(assessment.categoryScores).map(([name, value]) => ({
-        date: name,
-        value: Math.round(value)
-    }))
+    // 添加动态评分指示器组件
+    const ScoreIndicator = ({ score }: { score: number }) => {
+        const getScoreColor = (value: number) => {
+            if (value >= 85) return 'from-green-500 to-green-600'
+            if (value >= 70) return 'from-blue-500 to-blue-600'
+            if (value >= 50) return 'from-yellow-500 to-yellow-600'
+            return 'from-red-500 to-red-600'
+        }
 
-    const trendData = assessments
-        .filter(a => a.friendName === assessment.friendName)
-        .slice(0, 5)
-        .reverse()
-        .map(a => ({
-            date: format(new Date(a.date), 'MMM d'),
-            value: Math.round(a.overallScore)
-        }))
+        return (
+            <motion.div
+                initial={{ scale: 0.5, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="text-right"
+            >
+                <div className="flex flex-col items-end gap-1">
+                    <motion.div
+                        className={`
+                            text-3xl font-bold
+                            bg-gradient-to-r ${getScoreColor(score)}
+                            bg-clip-text text-transparent
+                        `}
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                    >
+                        {Math.round(score)}%
+                    </motion.div>
+                    <motion.div
+                        className="text-sm text-muted-foreground"
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                    >
+                        Overall Score
+                    </motion.div>
+                </div>
+            </motion.div>
+        )
+    }
+
+
+    // 添加详细分析卡片组件
+    const AnalysisCard = ({ category, score }: { category: string; score: number }) => {
+        const recommendations = getRecommendations(category, score)
+
+        return (
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="relative group"
+            >
+                <div className="
+                    p-6 rounded-lg
+                    bg-white/50 backdrop-blur-sm
+                    hover:bg-white/60
+                    border border-border/50
+                    transition-all duration-300
+                    hover:shadow-lg hover:shadow-primary/5
+                ">
+                    <div className="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 className="text-lg font-semibold mb-1">{category}</h3>
+                            <div className={`
+                                inline-flex items-center px-2 py-1 rounded-full text-sm
+                                ${score >= 70 ? 'bg-green-100 text-green-700' :
+                                score >= 50 ? 'bg-yellow-100 text-yellow-700' :
+                                    'bg-red-100 text-red-700'}
+                            `}>
+                                {score}% Proficiency
+                            </div>
+                        </div>
+                        <motion.div
+                            className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center"
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                        >
+                            <Target className="h-5 w-5 text-primary" />
+                        </motion.div>
+                    </div>
+
+                    <div className="space-y-3">
+                        <motion.div
+                            className="w-full bg-gray-200 rounded-full h-2 mb-4"
+                            initial={{ scaleX: 0 }}
+                            whileInView={{ scaleX: 1 }}
+                            viewport={{ once: true }}
+                        >
+                            <motion.div
+                                className={`
+                                    h-2 rounded-full
+                                    bg-gradient-to-r from-primary to-purple-600
+                                `}
+                                initial={{ width: 0 }}
+                                whileInView={{ width: `${score}%` }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.2, duration: 0.8 }}
+                            />
+                        </motion.div>
+
+                        <div className="flex flex-col gap-2">
+                            {recommendations.map((rec, index) => (
+                                <motion.div
+                                    key={index}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: index * 0.1 }}
+                                    className="
+                                        flex items-start gap-2
+                                        p-3 rounded-lg
+                                        bg-primary/5
+                                        group-hover:bg-primary/10
+                                        transition-colors duration-300
+                                    "
+                                >
+                                    <Lightbulb className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                                    <span className="text-sm">{rec}</span>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Hover Effect Gradient Border */}
+                <div className="
+                    absolute inset-0 -z-10
+                    bg-gradient-to-r from-primary/20 to-purple-600/20
+                    rounded-lg blur-xl
+                    opacity-0 group-hover:opacity-100
+                    transition-opacity duration-300
+                "/>
+            </motion.div>
+        )
+    }
+
+
+
+    // return (
+    //     <div className="container mx-auto px-4 py-8 max-w-5xl">
+    //         {/* Header Section */}
+    //         <div className="flex justify-between items-center mb-8">
+    //             <Button variant="ghost" onClick={() => router.back()}>
+    //                 <ArrowLeft className="mr-2" /> Back
+    //             </Button>
+    //             <div className="flex gap-2">
+    //                 <Button variant="outline" onClick={handleShare}>
+    //                     <Share2 className="mr-2" /> Share
+    //                 </Button>
+    //                 <Button variant="outline" onClick={handlePrint}>
+    //                     <Printer className="mr-2" /> Print
+    //                 </Button>
+    //                 <Button onClick={handleDownloadPDF}>
+    //                     <Download className="mr-2" /> Download PDF
+    //                 </Button>
+    //             </div>
+    //         </div>
+    //
+    //         {/* Main Content */}
+    //         <div className="space-y-8">
+    //             {/* Overview Card */}
+    //             <Card>
+    //                 <CardHeader>
+    //                     <div className="flex justify-between items-center">
+    //                         <div>
+    //                             <CardTitle className="text-2xl">Friendship Assessment Details</CardTitle>
+    //                             <p className="text-sm text-muted-foreground">
+    //                                 {format(new Date(assessment.date), 'MMMM d, yyyy')}
+    //                             </p>
+    //                         </div>
+    //                         <div className="text-right">
+    //                             <h3 className="text-3xl font-bold text-primary">
+    //                                 {Math.round(assessment.overallScore)}%
+    //                             </h3>
+    //                             <p className="text-sm text-muted-foreground">Overall Score</p>
+    //                         </div>
+    //                     </div>
+    //                 </CardHeader>
+    //                 <CardContent>
+    //                     <div className="space-y-4">
+    //                         <div>
+    //                             <h4 className="font-semibold">Friend Name</h4>
+    //                             <p>{assessment.friendName}</p>
+    //                         </div>
+    //                         <div>
+    //                             <h4 className="font-semibold">Assessment</h4>
+    //                             <p>{assessment.assessment.message}</p>
+    //                         </div>
+    //                         <div>
+    //                             <h4 className="font-semibold">Recommendation</h4>
+    //                             <p>{assessment.assessment.recommendation}</p>
+    //                         </div>
+    //                     </div>
+    //                 </CardContent>
+    //             </Card>
+    //
+    //             <div className="space-y-4">
+    //                 <BarMetric
+    //                     data={categoryData}
+    //                     title="Category Scores"
+    //                     description="Breakdown of friendship aspects"
+    //                 />
+    //                 {trendData.length > 1 && (
+    //                     <LineMetric
+    //                         data={trendData}
+    //                         title="Score Trend"
+    //                         description="Score history with this friend"
+    //                     />
+    //                 )}
+    //             </div>
+    //
+    //             {/* Detailed Recommendations */}
+    //             <Card>
+    //                 <CardHeader>
+    //                     <CardTitle>Detailed Analysis & Recommendations</CardTitle>
+    //                 </CardHeader>
+    //                 <CardContent>
+    //                     <Table>
+    //                         <TableHeader>
+    //                             <TableRow>
+    //                                 <TableHead>Category</TableHead>
+    //                                 <TableHead>Score</TableHead>
+    //                                 <TableHead>Recommendations</TableHead>
+    //                             </TableRow>
+    //                         </TableHeader>
+    //                         <TableBody>
+    //                             {Object.entries(assessment.categoryScores).map(([category, score]) => (
+    //                                 <TableRow key={category}>
+    //                                     <TableCell className="font-medium">{category}</TableCell>
+    //                                     <TableCell>{Math.round(score)}%</TableCell>
+    //                                     <TableCell>
+    //                                         <ul className="list-disc list-inside space-y-1">
+    //                                             {getRecommendations(category, score).map((rec, index) => (
+    //                                                 <li key={index}>{rec}</li>
+    //                                             ))}
+    //                                         </ul>
+    //                                     </TableCell>
+    //                                 </TableRow>
+    //                             ))}
+    //                         </TableBody>
+    //                     </Table>
+    //                 </CardContent>
+    //             </Card>
+    //         </div>
+    //     </div>
+    // )
+
+
 
     return (
-        <div className="container mx-auto px-4 py-8 max-w-5xl">
-            {/* Header Section */}
-            <div className="flex justify-between items-center mb-8">
-                <Button variant="ghost" onClick={() => router.back()}>
-                    <ArrowLeft className="mr-2" /> Back
-                </Button>
-                <div className="flex gap-2">
-                    <Button variant="outline" onClick={handleShare}>
-                        <Share2 className="mr-2" /> Share
-                    </Button>
-                    <Button variant="outline" onClick={handlePrint}>
-                        <Printer className="mr-2" /> Print
-                    </Button>
-                    <Button onClick={handleDownloadPDF}>
-                        <Download className="mr-2" /> Download PDF
-                    </Button>
-                </div>
-            </div>
+        <div className="min-h-screen bg-gradient-to-b from-background to-background/80">
+            <div className="container mx-auto px-4 py-8 max-w-5xl">
+                {/* Header */}
+                <div className="flex justify-between items-center mb-8">
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                    >
+                        <Button
+                            variant="ghost"
+                            onClick={() => router.back()}
+                            className="group"
+                        >
+                            <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                            Back
+                        </Button>
+                    </motion.div>
 
-            {/* Main Content */}
-            <div className="space-y-8">
+                    <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="flex gap-2"
+                    >
+                        {[
+                            { icon: Share2, label: 'Share', onClick: handleShare },
+                            { icon: Printer, label: 'Print', onClick: handlePrint },
+                            { icon: Download, label: 'Download PDF', onClick: handleDownloadPDF }
+                        ].map((action, index) => (
+                            <Button
+                                key={action.label}
+                                variant={index === 2 ? 'default' : 'outline'}
+                                onClick={action.onClick}
+                                className="gap-2"
+                            >
+                                <action.icon className="h-4 w-4" />
+                                {action.label}
+                            </Button>
+                        ))}
+                    </motion.div>
+                </div>
+
                 {/* Overview Card */}
-                <Card>
-                    <CardHeader>
-                        <div className="flex justify-between items-center">
-                            <div>
-                                <CardTitle className="text-2xl">Friendship Assessment Details</CardTitle>
-                                <p className="text-sm text-muted-foreground">
-                                    {format(new Date(assessment.date), 'MMMM d, yyyy')}
-                                </p>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mb-8"
+                >
+                    <Card className="border-none bg-white/50 backdrop-blur-sm">
+                        <CardContent className="pt-6">
+                            <div className="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <h2 className="text-2xl font-bold mb-2">
+                                        Friendship Assessment Details
+                                    </h2>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <h3 className="text-sm font-medium text-muted-foreground">
+                                                Assessment Date
+                                            </h3>
+                                            <p className="text-lg">
+                                                {format(new Date(assessment.date), 'PPP')}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <h3 className="text-sm font-medium text-muted-foreground">
+                                                Friend
+                                            </h3>
+                                            <p className="text-lg">{assessment.friendName}</p>
+                                        </div>
+                                        {assessment.notes && (
+                                            <div>
+                                                <h3 className="text-sm font-medium text-muted-foreground">
+                                                    Notes
+                                                </h3>
+                                                <p className="text-lg">{assessment.notes}</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="flex flex-col justify-center items-end">
+                                    <ScoreIndicator score={assessment.overallScore} />
+                                </div>
                             </div>
-                            <div className="text-right">
-                                <h3 className="text-3xl font-bold text-primary">
-                                    {Math.round(assessment.overallScore)}%
-                                </h3>
-                                <p className="text-sm text-muted-foreground">Overall Score</p>
-                            </div>
-                        </div>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="space-y-4">
-                            <div>
-                                <h4 className="font-semibold">Friend Name</h4>
-                                <p>{assessment.friendName}</p>
-                            </div>
-                            <div>
-                                <h4 className="font-semibold">Assessment</h4>
-                                <p>{assessment.assessment.message}</p>
-                            </div>
-                            <div>
-                                <h4 className="font-semibold">Recommendation</h4>
-                                <p>{assessment.assessment.recommendation}</p>
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
+                        </CardContent>
+                    </Card>
+                </motion.div>
 
-                <div className="space-y-4">
-                    <BarMetric
-                        data={categoryData}
-                        title="Category Scores"
-                        description="Breakdown of friendship aspects"
-                    />
-                    {trendData.length > 1 && (
-                        <LineMetric
-                            data={trendData}
-                            title="Score Trend"
-                            description="Score history with this friend"
+                {/* Detailed Analysis Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {Object.entries(assessment.categoryScores).map(([category, score], index) => (
+                        <AnalysisCard
+                            key={category}
+                            category={category}
+                            score={score}
                         />
-                    )}
+                    ))}
                 </div>
-
-                {/* Detailed Recommendations */}
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Detailed Analysis & Recommendations</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Category</TableHead>
-                                    <TableHead>Score</TableHead>
-                                    <TableHead>Recommendations</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {Object.entries(assessment.categoryScores).map(([category, score]) => (
-                                    <TableRow key={category}>
-                                        <TableCell className="font-medium">{category}</TableCell>
-                                        <TableCell>{Math.round(score)}%</TableCell>
-                                        <TableCell>
-                                            <ul className="list-disc list-inside space-y-1">
-                                                {getRecommendations(category, score).map((rec, index) => (
-                                                    <li key={index}>{rec}</li>
-                                                ))}
-                                            </ul>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </CardContent>
-                </Card>
             </div>
         </div>
     )
+
 }
