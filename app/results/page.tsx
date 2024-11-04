@@ -13,7 +13,7 @@ import { useToast } from "@/hooks/use-toast"
 import { v4 as uuidv4 } from 'uuid'
 import { FriendInfoDialog } from '@/components/FriendInfoDialog'
 import { calculateScores, getCategoryDescription } from '@/lib/assessment'
-import { ArrowRight, AlertTriangle, ThumbsUp, Shield, Heart, AlertCircle } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import {
     Alert,
     AlertDescription,

@@ -36,13 +36,16 @@ export function FriendInfoDialog({ open, onClose, onSubmit }: FriendInfoDialogPr
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Friend Information</DialogTitle>
+                    {/*<DialogDescription>*/}
+                    {/*    Add some details about the friend you're assessing. This helps track multiple friendships over time.*/}
+                    {/*</DialogDescription>*/}
                     <DialogDescription>
-                        Add some details about the friend you're assessing. This helps track multiple friendships over time.
+                        Add some details about the friend you&apos;re assessing. This helps track multiple friendships over time.
                     </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4 py-4">
                     <div className="space-y-2">
-                        <Label htmlFor="name">Friend's Name or Identifier</Label>
+                        <Label htmlFor="name">Friend&apos;s Name or Identifier</Label>
                         <Input
                             id="name"
                             placeholder="Enter a name or nickname"

@@ -20,8 +20,9 @@ import {
     YAxis,
     CartesianGrid,
     Tooltip,
-    ResponsiveContainer
-} from 'recharts'
+    Legend,
+    ResponsiveContainer,
+} from 'recharts';
 import { format } from 'date-fns'
 import { Heart, AlertTriangle, Shield } from 'lucide-react'
 import {
@@ -42,7 +43,6 @@ import {
 export default function HistoryPage() {
     const router = useRouter()
     const { assessments, removeAssessment, clearHistory } = useHistoryStore()
-    const [selectedAssessment, setSelectedAssessment] = useState<string | null>(null)
     const [showClearDialog, setShowClearDialog] = useState(false)
 
     const getScoreColor = (score: number) => {
@@ -61,10 +61,10 @@ export default function HistoryPage() {
     const trendData = assessments
         .slice()
         .reverse()
-        .map(assessment => ({
+        .map((assessment) => ({
             date: format(new Date(assessment.date), 'MMM d'),
-            score: Math.round(assessment.overallScore)
-        }))
+            score: Math.round(assessment.overallScore),
+        }));
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -93,6 +93,7 @@ export default function HistoryPage() {
                                     <XAxis dataKey="date" />
                                     <YAxis domain={[0, 100]} />
                                     <Tooltip />
+                                    <Legend />
                                     <Line
                                         type="monotone"
                                         dataKey="score"

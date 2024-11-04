@@ -3,23 +3,24 @@
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { useHistoryStore } from '@/lib/history-store'
+import { BarMetric, LineMetric } from '@/components/ui/metrics'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import {
-    Radar,
-    RadarChart,
-    PolarGrid,
-    PolarAngleAxis,
-    PolarRadiusAxis,
-    ResponsiveContainer,
-    LineChart,
-    Line,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend,
-} from 'recharts'
+// import {
+//     Radar,
+//     RadarChart,
+//     PolarGrid,
+//     PolarAngleAxis,
+//     PolarRadiusAxis,
+//     ResponsiveContainer,
+//     LineChart,
+//     Line,
+//     XAxis,
+//     YAxis,
+//     CartesianGrid,
+//     Tooltip,
+//     Legend,
+// } from 'recharts'
 import {
     Table,
     TableBody,
@@ -31,7 +32,8 @@ import {
 import { format } from 'date-fns'
 import { Download, Share2, ArrowLeft, Printer } from 'lucide-react'
 import { useToast } from "@/hooks/use-toast"
-import { ComparisonChart } from '@/components/ComparisonChart'
+// import { ComparisonChart } from '@/components/ComparisonChart'
+import { AssessmentResult } from '@/types/assessment'
 
 const CATEGORY_DETAILS = {
     "Trust & Honesty": {
@@ -63,19 +65,30 @@ export default function DetailedResultPage() {
     const { toast } = useToast()
     const { getAssessment, assessments } = useHistoryStore()
     const [assessment, setAssessment] = useState<AssessmentResult | undefined>()
-    const [comparisonData, setComparisonData] = useState<any[]>([])
+    // const [comparisonData, setComparisonData] = useState<any[]>([])
+
+    // useEffect(() => {
+    //     if (params.id) {
+    //         const result = getAssessment(params.id as string)
+    //         if (result) {
+    //             setAssessment(result)
+    //             // Get previous assessments for the same friend
+    //             const previousAssessments = assessments
+    //                 .filter(a => a.friendName === result.friendName)
+    //                 .slice(0, 5)
+    //                 .reverse()
+    //             setComparisonData(previousAssessments)
+    //         } else {
+    //             router.push('/history')
+    //         }
+    //     }
+    // }, [params.id, getAssessment, router])
 
     useEffect(() => {
         if (params.id) {
             const result = getAssessment(params.id as string)
             if (result) {
                 setAssessment(result)
-                // Get previous assessments for the same friend
-                const previousAssessments = assessments
-                    .filter(a => a.friendName === result.friendName)
-                    .slice(0, 5)
-                    .reverse()
-                setComparisonData(previousAssessments)
             } else {
                 router.push('/history')
             }
@@ -113,10 +126,24 @@ export default function DetailedResultPage() {
         return details.recommendations.low
     }
 
-    const chartData = Object.entries(assessment.categoryScores).map(([name, value]) => ({
-        category: name,
-        score: Math.round(value)
+    // const chartData = Object.entries(assessment.categoryScores).map(([name, value]) => ({
+    //     category: name,
+    //     score: Math.round(value)
+    // }))
+
+    const categoryData = Object.entries(assessment.categoryScores).map(([name, value]) => ({
+        date: name,
+        value: Math.round(value)
     }))
+
+    const trendData = assessments
+        .filter(a => a.friendName === assessment.friendName)
+        .slice(0, 5)
+        .reverse()
+        .map(a => ({
+            date: format(new Date(a.date), 'MMM d'),
+            value: Math.round(a.overallScore)
+        }))
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-5xl">
@@ -177,42 +204,57 @@ export default function DetailedResultPage() {
                 </Card>
 
                 {/* Radar Chart */}
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Category Breakdown</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="h-[400px]">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <RadarChart data={chartData}>
-                                    <PolarGrid />
-                                    <PolarAngleAxis dataKey="category" />
-                                    <PolarRadiusAxis domain={[0, 100]} />
-                                    <Radar
-                                        name="Score"
-                                        dataKey="score"
-                                        fill="#3b82f6"
-                                        fillOpacity={0.6}
-                                    />
-                                </RadarChart>
-                            </ResponsiveContainer>
-                        </div>
-                    </CardContent>
-                </Card>
+                {/*<Card>*/}
+                {/*    <CardHeader>*/}
+                {/*        <CardTitle>Category Breakdown</CardTitle>*/}
+                {/*    </CardHeader>*/}
+                {/*    <CardContent>*/}
+                {/*        <div className="h-[400px]">*/}
+                {/*            <ResponsiveContainer width="100%" height="100%">*/}
+                {/*                <RadarChart data={chartData}>*/}
+                {/*                    <PolarGrid />*/}
+                {/*                    <PolarAngleAxis dataKey="category" />*/}
+                {/*                    <PolarRadiusAxis domain={[0, 100]} />*/}
+                {/*                    <Radar*/}
+                {/*                        name="Score"*/}
+                {/*                        dataKey="score"*/}
+                {/*                        fill="#3b82f6"*/}
+                {/*                        fillOpacity={0.6}*/}
+                {/*                    />*/}
+                {/*                </RadarChart>*/}
+                {/*            </ResponsiveContainer>*/}
+                {/*        </div>*/}
+                {/*    </CardContent>*/}
+                {/*</Card>*/}
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <BarMetric
+                        data={categoryData}
+                        title="Category Scores"
+                        description="Breakdown of friendship aspects"
+                    />
+                    {trendData.length > 1 && (
+                        <LineMetric
+                            data={trendData}
+                            title="Score Trend"
+                            description="Score history with this friend"
+                        />
+                    )}
+                </div>
 
                 {/* Trend Analysis */}
-                {comparisonData.length > 1 && (
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Score Trend</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="h-[300px]">
-                                <ComparisonChart data={comparisonData} />
-                            </div>
-                        </CardContent>
-                    </Card>
-                )}
+                {/*{comparisonData.length > 1 && (*/}
+                {/*    <Card>*/}
+                {/*        <CardHeader>*/}
+                {/*            <CardTitle>Score Trend</CardTitle>*/}
+                {/*        </CardHeader>*/}
+                {/*        <CardContent>*/}
+                {/*            <div className="h-[300px]">*/}
+                {/*                <ComparisonChart data={comparisonData}/>*/}
+                {/*            </div>*/}
+                {/*        </CardContent>*/}
+                {/*    </Card>*/}
+                {/*)}*/}
 
                 {/* Detailed Recommendations */}
                 <Card>
