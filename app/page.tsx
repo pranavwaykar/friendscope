@@ -116,7 +116,7 @@ export default function Home() {
     return (
         <div className="min-h-screen bg-gradient-to-b from-background to-background/80">
             {/* Hero Section */}
-            <div className="container mx-auto px-4 pt-10 pb-20">
+            <div className="container mx-auto px-4 pt-10 pb-10">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -146,7 +146,7 @@ export default function Home() {
                         >
                             <Button
                                 size="lg"
-                                className="group relative overflow-hidden bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-700 transition-all duration-300 px-8 py-6 text-lg"
+                                className="group relative overflow-hidden bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-700 transition-all duration-300 px-8 py-2 text-lg"
                             >
                                 Start Your Journey
                                 <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
