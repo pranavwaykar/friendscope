@@ -270,6 +270,46 @@ export default function DetailedResultPage() {
     }
 
     // 添加动态评分指示器组件
+    // const ScoreIndicator = ({ score }: { score: number }) => {
+    //     const getScoreColor = (value: number) => {
+    //         if (value >= 85) return 'from-green-500 to-green-600'
+    //         if (value >= 70) return 'from-blue-500 to-blue-600'
+    //         if (value >= 50) return 'from-yellow-500 to-yellow-600'
+    //         return 'from-red-500 to-red-600'
+    //     }
+    //
+    //     return (
+    //         <motion.div
+    //             initial={{ scale: 0.5, opacity: 0 }}
+    //             animate={{ scale: 1, opacity: 1 }}
+    //             className="text-right"
+    //         >
+    //             <div className="flex flex-col items-end gap-1">
+    //                 <motion.div
+    //                     className={`
+    //                         text-3xl font-bold
+    //                         bg-gradient-to-r ${getScoreColor(score)}
+    //                         bg-clip-text text-transparent
+    //                     `}
+    //                     initial={{ y: 20, opacity: 0 }}
+    //                     animate={{ y: 0, opacity: 1 }}
+    //                     transition={{ delay: 0.2 }}
+    //                 >
+    //                     {Math.round(score)}%
+    //                 </motion.div>
+    //                 <motion.div
+    //                     className="text-sm text-muted-foreground"
+    //                     initial={{ y: 20, opacity: 0 }}
+    //                     animate={{ y: 0, opacity: 1 }}
+    //                     transition={{ delay: 0.3 }}
+    //                 >
+    //                     Overall Score
+    //                 </motion.div>
+    //             </div>
+    //         </motion.div>
+    //     )
+    // }
+
     const ScoreIndicator = ({ score }: { score: number }) => {
         const getScoreColor = (value: number) => {
             if (value >= 85) return 'from-green-500 to-green-600'
@@ -277,6 +317,9 @@ export default function DetailedResultPage() {
             if (value >= 50) return 'from-yellow-500 to-yellow-600'
             return 'from-red-500 to-red-600'
         }
+
+        // 格式化分数到两位小数
+        const formattedScore = Number(score.toFixed(2))
 
         return (
             <motion.div
@@ -287,15 +330,16 @@ export default function DetailedResultPage() {
                 <div className="flex flex-col items-end gap-1">
                     <motion.div
                         className={`
-                            text-3xl font-bold
-                            bg-gradient-to-r ${getScoreColor(score)}
-                            bg-clip-text text-transparent
-                        `}
+                        text-3xl font-bold
+                        bg-gradient-to-r ${getScoreColor(formattedScore)}
+                        bg-clip-text text-transparent
+                        tabular-nums
+                    `}
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.2 }}
                     >
-                        {Math.round(score)}%
+                        {formattedScore}%
                     </motion.div>
                     <motion.div
                         className="text-sm text-muted-foreground"
@@ -311,9 +355,11 @@ export default function DetailedResultPage() {
     }
 
 
+
     // 添加详细分析卡片组件
     const AnalysisCard = ({ category, score }: { category: string; score: number }) => {
         const recommendations = getRecommendations(category, score)
+        const formattedScore = Number(score.toFixed(2))
 
         return (
             <motion.div
@@ -333,21 +379,28 @@ export default function DetailedResultPage() {
                     <div className="flex justify-between items-start mb-4">
                         <div>
                             <h3 className="text-lg font-semibold mb-1">{category}</h3>
+                            {/*<div className={`*/}
+                            {/*    inline-flex items-center px-2 py-1 rounded-full text-sm*/}
+                            {/*    ${score >= 70 ? 'bg-green-100 text-green-700' :*/}
+                            {/*    score >= 50 ? 'bg-yellow-100 text-yellow-700' :*/}
+                            {/*        'bg-red-100 text-red-700'}*/}
+                            {/*`}>*/}
                             <div className={`
-                                inline-flex items-center px-2 py-1 rounded-full text-sm
-                                ${score >= 70 ? 'bg-green-100 text-green-700' :
-                                score >= 50 ? 'bg-yellow-100 text-yellow-700' :
+                            inline-flex items-center px-2 py-1 rounded-full text-sm
+                            ${formattedScore >= 70 ? 'bg-green-100 text-green-700' :
+                                formattedScore >= 50 ? 'bg-yellow-100 text-yellow-700' :
                                     'bg-red-100 text-red-700'}
+                            tabular-nums
                             `}>
-                                {score}% Proficiency
+                                {formattedScore}% Proficiency
                             </div>
                         </div>
                         <motion.div
                             className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center"
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
+                            whileHover={{scale: 1.1}}
+                            whileTap={{scale: 0.9}}
                         >
-                            <Target className="h-5 w-5 text-primary" />
+                            <Target className="h-5 w-5 text-primary"/>
                         </motion.div>
                     </div>
 
@@ -364,7 +417,7 @@ export default function DetailedResultPage() {
                                     bg-gradient-to-r from-primary to-purple-600
                                 `}
                                 initial={{ width: 0 }}
-                                whileInView={{ width: `${score}%` }}
+                                whileInView={{ width: `${formattedScore}%` }}
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.2, duration: 0.8 }}
                             />
