@@ -22,6 +22,7 @@ import {
 import { AssessmentResult } from '@/types/assessment'
 import ShareDialog from '@/components/dialogs/ShareDialog';
 import { motion } from 'framer-motion'
+import {LottieAnimation} from "@/components/LottieAnimation";
 
 interface FriendInfo {
     name: string;
@@ -102,6 +103,36 @@ export default function ResultsPage() {
         value: Math.round(value),
         description: getCategoryDescription(name, value)
     }))
+
+
+    const ResultLottieAnimation = ({ score }: { score: number }) => {
+        // 根据分数选择对应的动画文件
+        const getLottieFile = (score: number) => {
+            if (score >= 90) return "/Lottie/90-point-friendship.json";
+            if (score >= 80) return "/Lottie/80-point-friendship.json";
+            if (score >= 70) return "/Lottie/70-point-friendship.json";
+            if (score >= 60) return "/Lottie/60-point-friendship.json";
+            if (score >= 50) return "/Lottie/50-point-friendship.json";
+            if (score >= 40) return "/Lottie/40-point-friendship.json";
+            if (score >= 30) return "/Lottie/30-point-friendship.json";
+            if (score >= 20) return "/Lottie/20-point-friendship.json";
+            return "/Lottie/10-point-friendship.json";
+        };
+
+        return (
+            <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5 }}
+                className="w-64 h-64 mx-auto my-8"
+            >
+                <LottieAnimation
+                    path={getLottieFile(score)}
+                    className="w-full h-full"
+                />
+            </motion.div>
+        );
+    };
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -188,6 +219,9 @@ export default function ResultsPage() {
                                 </div>
                             </div>
                         </motion.div>
+
+                        {/* 添加分数对应的Lottie动画 */}
+                        <ResultLottieAnimation score={assessmentResult.overallScore} />
 
                         <motion.p
                             className="text-xl"

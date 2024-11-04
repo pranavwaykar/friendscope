@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast"
 import { AssessmentResult } from '@/types/assessment'
 import { generatePDF, shareAssessment } from '@/lib/assessment-utils';
 import { motion} from 'framer-motion'
+import {LottieAnimation} from "@/components/LottieAnimation";
 
 const CATEGORY_DETAILS = {
     "Trust & Honesty": {
@@ -355,6 +356,39 @@ export default function DetailedResultPage() {
     }
 
 
+    const DetailedLottieAnimation = ({ score }: { score: number }) => {
+        // 根据分数选择对应的动画文件
+        const getLottieFile = (score: number) => {
+            if (score >= 90) return "/Lottie/90-point-friendship.json";
+            if (score >= 80) return "/Lottie/80-point-friendship.json";
+            if (score >= 70) return "/Lottie/70-point-friendship.json";
+            if (score >= 60) return "/Lottie/60-point-friendship.json";
+            if (score >= 50) return "/Lottie/50-point-friendship.json";
+            if (score >= 40) return "/Lottie/40-point-friendship.json";
+            if (score >= 30) return "/Lottie/30-point-friendship.json";
+            if (score >= 20) return "/Lottie/20-point-friendship.json";
+            return "/Lottie/10-point-friendship.json";
+        };
+
+        return (
+            <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 20,
+                    delay: 0.2
+                }}
+                className="hidden md:block w-64 h-64"
+            >
+                <LottieAnimation
+                    path={getLottieFile(score)}
+                    className="w-full h-full"
+                />
+            </motion.div>
+        );
+    };
 
     // 添加详细分析卡片组件
     const AnalysisCard = ({ category, score }: { category: string; score: number }) => {
@@ -620,10 +654,51 @@ export default function DetailedResultPage() {
                     animate={{ opacity: 1, y: 0 }}
                     className="mb-8"
                 >
+                    {/*<Card className="border-none bg-white/50 backdrop-blur-sm">*/}
+                    {/*    <CardContent className="pt-6">*/}
+                    {/*        <div className="grid md:grid-cols-2 gap-6">*/}
+                    {/*            <div>*/}
+                    {/*                <h2 className="text-2xl font-bold mb-2">*/}
+                    {/*                    Friendship Assessment Details*/}
+                    {/*                </h2>*/}
+                    {/*                <div className="space-y-4">*/}
+                    {/*                    <div>*/}
+                    {/*                        <h3 className="text-sm font-medium text-muted-foreground">*/}
+                    {/*                            Assessment Date*/}
+                    {/*                        </h3>*/}
+                    {/*                        <p className="text-lg">*/}
+                    {/*                            {format(new Date(assessment.date), 'PPP')}*/}
+                    {/*                        </p>*/}
+                    {/*                    </div>*/}
+                    {/*                    <div>*/}
+                    {/*                        <h3 className="text-sm font-medium text-muted-foreground">*/}
+                    {/*                            Friend*/}
+                    {/*                        </h3>*/}
+                    {/*                        <p className="text-lg">{assessment.friendName}</p>*/}
+                    {/*                    </div>*/}
+                    {/*                    {assessment.notes && (*/}
+                    {/*                        <div>*/}
+                    {/*                            <h3 className="text-sm font-medium text-muted-foreground">*/}
+                    {/*                                Notes*/}
+                    {/*                            </h3>*/}
+                    {/*                            <p className="text-lg">{assessment.notes}</p>*/}
+                    {/*                        </div>*/}
+                    {/*                    )}*/}
+                    {/*                </div>*/}
+                    {/*            </div>*/}
+                    {/*            <div className="flex flex-col justify-center items-end">*/}
+                    {/*                <ScoreIndicator score={assessment.overallScore} />*/}
+                    {/*            </div>*/}
+                    {/*        </div>*/}
+                    {/*    </CardContent>*/}
+                    {/*</Card>*/}
+
+
                     <Card className="border-none bg-white/50 backdrop-blur-sm">
                         <CardContent className="pt-6">
-                            <div className="grid md:grid-cols-2 gap-6">
-                                <div>
+                            <div className="grid md:grid-cols-3 gap-6 items-center">
+                                {/* 左侧信息 */}
+                                <div className="md:col-span-1">
                                     <h2 className="text-2xl font-bold mb-2">
                                         Friendship Assessment Details
                                     </h2>
@@ -652,12 +727,20 @@ export default function DetailedResultPage() {
                                         )}
                                     </div>
                                 </div>
-                                <div className="flex flex-col justify-center items-end">
+
+                                {/* 中间Lottie动画 */}
+                                <div className="flex justify-center md:col-span-1">
+                                    <DetailedLottieAnimation score={assessment.overallScore} />
+                                </div>
+
+                                {/* 右侧分数 */}
+                                <div className="flex flex-col justify-center items-end md:col-span-1">
                                     <ScoreIndicator score={assessment.overallScore} />
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
+
                 </motion.div>
 
                 {/* Detailed Analysis Grid */}
