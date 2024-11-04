@@ -131,12 +131,150 @@ export default function Home() {
                     </p>
 
                     {/* Main Lottie Animation */}
-                    <div className="w-64 h-64 mx-auto mb-12 transition-transform hover:scale-105">
-                        <LottieAnimation
-                            path="/Lottie/jumping-ball.json"
-                            className="w-full h-full"
+                    {/*<div className="w-64 h-64 mx-auto mb-12 transition-transform hover:scale-105">*/}
+                    {/*    <LottieAnimation*/}
+                    {/*        path="/Lottie/jumping-ball.json"*/}
+                    {/*        className="w-full h-full"*/}
+                    {/*    />*/}
+                    {/*</div>*/}
+
+
+                    {/* Main Lottie Animation */}
+                    <motion.div
+                        className="w-64 h-64 mx-auto mb-12 relative"
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                    >
+                        {/* 背景光环效果 */}
+                        <motion.div
+                            className="absolute inset-0 rounded-full"
+                            initial={{ opacity: 0 }}
+                            whileHover={{
+                                opacity: [0.2, 0.5, 0.2],
+                                scale: [1, 1.2, 1],
+                                background: [
+                                    "radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%)",
+                                    "radial-gradient(circle, rgba(147,51,234,0.3) 0%, transparent 70%)",
+                                    "radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%)"
+                                ]
+                            }}
+                            transition={{
+                                duration: 2,
+                                repeat: Infinity,
+                                ease: "easeInOut"
+                            }}
                         />
-                    </div>
+
+                        {/* 主动画容器 */}
+                        <motion.div
+                            className="relative cursor-pointer"
+                            whileHover={{
+                                scale: 1.1,
+                                rotate: [0, 5, -5, 0],
+                                transition: {
+                                    scale: {
+                                        type: "spring",
+                                        stiffness: 300,
+                                        damping: 10
+                                    },
+                                    rotate: {
+                                        duration: 1,
+                                        repeat: Infinity,
+                                        ease: "easeInOut"
+                                    }
+                                }
+                            }}
+                            whileTap={{
+                                scale: 0.9,
+                                rotate: -10,
+                                transition: {
+                                    type: "spring",
+                                    stiffness: 200,
+                                    damping: 5
+                                }
+                            }}
+                        >
+                            {/* Lottie动画 */}
+                            <motion.div
+                                className="relative z-10"
+                                animate={{
+                                    y: [0, -10, 0],
+                                    filter: [
+                                        "drop-shadow(0 4px 6px rgba(59,130,246,0.1))",
+                                        "drop-shadow(0 8px 12px rgba(147,51,234,0.2))",
+                                        "drop-shadow(0 4px 6px rgba(59,130,246,0.1))"
+                                    ]
+                                }}
+                                transition={{
+                                    duration: 2,
+                                    repeat: Infinity,
+                                    ease: "easeInOut"
+                                }}
+                            >
+                                <LottieAnimation
+                                    path="/Lottie/jumping-ball.json"
+                                    className="w-full h-full outline-none"
+                                />
+                            </motion.div>
+
+                            {/* 点击涟漪效果 */}
+                            <motion.div
+                                className="absolute inset-0 rounded-full pointer-events-none"
+                                whileTap={{
+                                    boxShadow: [
+                                        "0 0 0 0 rgba(59,130,246,0.4)",
+                                        "0 0 0 20px rgba(59,130,246,0)",
+                                    ],
+                                    transition: { duration: 0.5 }
+                                }}
+                            />
+
+                            {/* 悬停时的装饰性粒子 */}
+                            <motion.div
+                                className="absolute inset-0 pointer-events-none"
+                                whileHover={{
+                                    opacity: 1,
+                                }}
+                                initial={{ opacity: 0 }}
+                            >
+                                {[...Array(6)].map((_, i) => (
+                                    <motion.div
+                                        key={i}
+                                        className="absolute w-2 h-2 rounded-full bg-gradient-to-r from-primary to-purple-600"
+                                        initial={{
+                                            x: "50%",
+                                            y: "50%",
+                                            scale: 0,
+                                            opacity: 0
+                                        }}
+                                        whileHover={{
+                                            scale: [0, 1, 0],
+                                            opacity: [0, 1, 0],
+                                            x: ["50%", `${50 + Math.cos(i * 60) * 100}%`],
+                                            y: ["50%", `${50 + Math.sin(i * 60) * 100}%`],
+                                        }}
+                                        transition={{
+                                            duration: 1,
+                                            delay: i * 0.1,
+                                            repeat: Infinity,
+                                            repeatType: "loop",
+                                        }}
+                                    />
+                                ))}
+                            </motion.div>
+                        </motion.div>
+
+                        {/* 交互提示文字 */}
+                        <motion.p
+                            className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-sm text-muted-foreground opacity-0"
+                            whileHover={{ opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            Try hovering and clicking!
+                        </motion.p>
+                    </motion.div>
+
 
                     {/* Animated CTA Button */}
                     <Link href="/assess">
