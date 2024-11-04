@@ -265,23 +265,6 @@ export default function DetailedResultPage() {
         }
     };
 
-    // const handleDownloadPDF = () => {
-    //     // PDF generation logic will be implemented later
-    //     toast({
-    //         title: "Coming Soon",
-    //         description: "PDF download feature will be available soon!"
-    //     })
-    // }
-    //
-    // const handleShare = () => {
-    //     const url = window.location.href
-    //     navigator.clipboard.writeText(url)
-    //     toast({
-    //         title: "Link Copied",
-    //         description: "Assessment link has been copied to clipboard"
-    //     })
-    // }
-
     const handlePrint = () => {
         window.print()
     }

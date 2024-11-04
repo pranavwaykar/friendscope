@@ -178,9 +178,6 @@ export default function ResultsPage() {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap justify-center gap-4">
-                {/*<Button size="lg" onClick={handleShare}>*/}
-                {/*    Share Results*/}
-                {/*</Button>*/}
                 <Button size="lg" onClick={() => setShowShareDialog(true)}>
                     Share Results
                 </Button>

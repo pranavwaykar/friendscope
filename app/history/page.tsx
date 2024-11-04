@@ -39,6 +39,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
+import { Settings, Eye, Trash } from 'lucide-react';
 
 export default function HistoryPage() {
     const router = useRouter()
@@ -139,20 +140,27 @@ export default function HistoryPage() {
                                     <TableCell className="text-right">
                                         <DropdownMenu>
                                             <DropdownMenuTrigger asChild>
-                                                <Button variant="ghost" size="sm">
+                                                {/*<Button variant="ghost" size="sm">*/}
+                                                {/*    Actions*/}
+                                                {/*</Button>*/}
+                                                <Button variant="default" size="sm" className="bg-primary text-white hover:bg-primary/90">
+                                                    <Settings className="h-4 w-4 mr-1" />
                                                     Actions
                                                 </Button>
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent>
                                                 <DropdownMenuItem
+                                                    className="cursor-pointer flex items-center"
                                                     onClick={() => router.push(`/results/${assessment.id}`)}
                                                 >
+                                                    <Eye className="h-4 w-4 mr-2" />
                                                     View Details
                                                 </DropdownMenuItem>
                                                 <DropdownMenuItem
                                                     onClick={() => removeAssessment(assessment.id)}
-                                                    className="text-red-600"
+                                                    className="cursor-pointer flex items-center text-red-600 focus:text-red-600"
                                                 >
+                                                    <Trash className="h-4 w-4 mr-2" />
                                                     Delete
                                                 </DropdownMenuItem>
                                             </DropdownMenuContent>
