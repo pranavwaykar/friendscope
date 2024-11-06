@@ -36,9 +36,6 @@ export function FriendInfoDialog({ open, onClose, onSubmit }: FriendInfoDialogPr
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Friend Information</DialogTitle>
-                    {/*<DialogDescription>*/}
-                    {/*    Add some details about the friend you're assessing. This helps track multiple friendships over time.*/}
-                    {/*</DialogDescription>*/}
                     <DialogDescription>
                         Add some details about the friend you&apos;re assessing. This helps track multiple friendships over time.
                     </DialogDescription>
