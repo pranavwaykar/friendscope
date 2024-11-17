@@ -216,7 +216,7 @@ export default function HistoryPage() {
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-background to-background/80">
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 lg:py-12">
                 {/* Header Section */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -278,7 +278,7 @@ export default function HistoryPage() {
                 </motion.div>
 
                 {/* Overview Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 md:gap-6 mb-8">
                     <Card className="bg-white/50 backdrop-blur-sm border-none">
                         <CardHeader className="pb-2">
                             <CardTitle>Total Assessments</CardTitle>

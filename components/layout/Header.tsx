@@ -7,7 +7,10 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import {
     Sheet,
-    SheetContent, SheetDescription, SheetHeader, SheetTitle,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
 import {
@@ -53,11 +56,11 @@ export function Header() {
                     : 'bg-transparent'
             }`}
         >
-            <div className="container flex items-center justify-between h-16">
+            <div className="container flex items-center justify-between h-16 px-4 md:px-6">
 
                 <Link href="/" className="flex items-center gap-2">
                     {/* Logo - 不带动画效果 */}
-                    <div className="relative w-16 h-16">
+                    <div className="relative w-12 h-12 md:w-16 md:h-16">
                         <Image
                             src="/friendscope-logo.svg"
                             alt="FriendScope Logo"
@@ -67,12 +70,12 @@ export function Header() {
                         />
                     </div>
 
-                    {/* 标题 - 带动画效果 */}
-                    <div className="relative group">
+                    {/* 标题 - 带动画效果，在移动端隐藏文字 Logo */}
+                    <div className="hidden md:block relative group">
                         <motion.span
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
-                            className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent"
+                            className="text-xl md:text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent"
                         >
                             FriendScope
                         </motion.span>
@@ -129,24 +132,25 @@ export function Header() {
                             <SheetTitle>Navigation Menu</SheetTitle>
                             <SheetDescription>Access all pages from here</SheetDescription>
                         </SheetHeader>
-                        <nav className="flex flex-col space-y-4 mt-8">
+                        <nav className="flex flex-col space-y-4 mt-8 px-2">
                             {navigationItems.map((item, index) => (
                                 <motion.div
                                     key={item.href}
                                     initial={{ opacity: 0, x: 50 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ delay: index * 0.1 }}
+                                    className="w-full" // 添加全宽度
                                 >
-                                    <Link href={item.href}>
+                                    <Link href={item.href} className="w-full block">
                                         <Button
                                             variant={item.href === '/assess' ? 'default' : 'ghost'}
-                                            className={`w-full justify-start group relative ${
+                                            className={`w-full justify-start group relative py-6 text-lg ${
                                                 item.href === '/assess'
                                                     ? 'bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-700'
                                                     : ''
                                             }`}
                                         >
-                                            <item.icon className="w-4 h-4 mr-2 transition-transform group-hover:scale-110" />
+                                            <item.icon className="w-5 h-5 mr-3 transition-transform group-hover:scale-110" />
                                             {item.href !== '/assess' ? (
                                                 <div className="relative group/underline">
                                                     <span>{item.label}</span>

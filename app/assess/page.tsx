@@ -149,7 +149,7 @@ export default function AssessmentPage() {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8 max-w-3xl relative">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 lg:py-12 max-w-3xl relative">
             {/* Interactive Star Animation */}
             <div className="absolute -left-32 top-1/5 w-64 h-64 z-10 opacity-90 pointer-events-none">
                 <LottieAnimation
