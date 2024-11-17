@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import {
     Sheet,
-    SheetContent,
+    SheetContent, SheetDescription, SheetHeader, SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
 import {
@@ -125,6 +125,10 @@ export function Header() {
                         </Button>
                     </SheetTrigger>
                     <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                        <SheetHeader>
+                            <SheetTitle>Navigation Menu</SheetTitle>
+                            <SheetDescription>Access all pages from here</SheetDescription>
+                        </SheetHeader>
                         <nav className="flex flex-col space-y-4 mt-8">
                             {navigationItems.map((item, index) => (
                                 <motion.div
