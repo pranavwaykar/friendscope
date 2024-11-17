@@ -12,6 +12,7 @@ import { AssessmentResult } from '@/types/assessment'
 import { generatePDF, shareAssessment } from '@/lib/assessment-utils';
 import { motion} from 'framer-motion'
 import {LottieAnimation} from "@/components/LottieAnimation";
+import {downloadSVG, generateResultSVG} from "@/lib/svg-generator";
 
 const CATEGORY_DETAILS = {
     "Trust & Honesty": {
@@ -453,36 +454,45 @@ export default function DetailedResultPage() {
                 {/* Header */}
                 <div className="flex justify-between items-center mb-8">
                     <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
+                        initial={{opacity: 0, x: -20}}
+                        animate={{opacity: 1, x: 0}}
                     >
                         <Button
                             variant="ghost"
                             onClick={() => router.back()}
                             className="group"
                         >
-                            <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                            <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"/>
                             Back
                         </Button>
                     </motion.div>
 
                     <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
+                        initial={{opacity: 0, x: 20}}
+                        animate={{opacity: 1, x: 0}}
                         className="flex gap-2"
                     >
                         {[
-                            { icon: Share2, label: 'Share', onClick: handleShare },
-                            { icon: Printer, label: 'Print', onClick: handlePrint },
-                            { icon: Download, label: 'Download PDF', onClick: handleDownloadPDF }
+                            {icon: Share2, label: 'Share', onClick: handleShare},
+                            {icon: Download, label: 'Create SVG', onClick: () => {
+                                    const svg = generateResultSVG(
+                                        assessment.friendName,
+                                        assessment.overallScore,
+                                        assessment.categoryScores
+                                    );
+                                    downloadSVG(svg, assessment.friendName);
+                                }
+                            },
+                            {icon: Printer, label: 'Print', onClick: handlePrint},
+                            {icon: Download, label: 'Download PDF', onClick: handleDownloadPDF}
                         ].map((action, index) => (
                             <Button
                                 key={action.label}
-                                variant={index === 2 ? 'default' : 'outline'}
+                                variant={index === 3 ? 'default' : 'outline'}
                                 onClick={action.onClick}
                                 className="gap-2"
                             >
-                                <action.icon className="h-4 w-4" />
+                                <action.icon className="h-4 w-4"/>
                                 {action.label}
                             </Button>
                         ))}
@@ -491,8 +501,8 @@ export default function DetailedResultPage() {
 
                 {/* Overview Card */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{opacity: 0, y: 20}}
+                    animate={{opacity: 1, y: 0}}
                     className="mb-8"
                 >
 
@@ -506,7 +516,7 @@ export default function DetailedResultPage() {
                                     </h2>
                                     <div className="space-y-4">
                                         <div>
-                                            <h3 className="text-sm font-medium text-muted-foreground">
+                                        <h3 className="text-sm font-medium text-muted-foreground">
                                                 Assessment Date
                                             </h3>
                                             <p className="text-lg">

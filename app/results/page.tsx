@@ -12,7 +12,7 @@ import { LoadingSpinner } from '@/components/ui/loading-spinner'
 import { v4 as uuidv4 } from 'uuid'
 import { FriendInfoDialog } from '@/components/FriendInfoDialog'
 import { calculateScores, getCategoryDescription } from '@/lib/assessment'
-import {AlertCircle, ArrowRight, ChartPie, RotateCcw, Share2, History} from 'lucide-react'
+import {AlertCircle, ArrowRight, ChartPie, RotateCcw, Share2, History, Download} from 'lucide-react'
 import {
     Alert,
     AlertDescription,
@@ -22,6 +22,7 @@ import { AssessmentResult } from '@/types/assessment'
 import ShareDialog from '@/components/dialogs/ShareDialog';
 import { motion } from 'framer-motion'
 import {LottieAnimation} from "@/components/LottieAnimation";
+import {downloadSVG, generateResultSVG} from "@/lib/svg-generator";
 
 interface FriendInfo {
     name: string;
@@ -293,6 +294,23 @@ export default function ResultsPage() {
                     Share Results
                     <div
                         className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"/>
+                </Button>
+
+                <Button
+                    size="lg"
+                    onClick={() => {
+                        const svg = generateResultSVG(
+                            friendName,
+                            assessmentResult.overallScore,
+                            assessmentResult.categoryScores
+                        );
+                        downloadSVG(svg, friendName);
+                    }}
+                    variant="outline"
+                    className="group border-primary/20 hover:border-primary/40"
+                >
+                    <Download className="mr-2 h-5 w-5 transition-transform group-hover:-translate-y-1" />
+                    Create Result SVG
                 </Button>
 
                 <Link href="/history">
