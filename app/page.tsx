@@ -63,7 +63,7 @@ export default function Home() {
     return (
         <div className="min-h-screen bg-gradient-to-b from-background to-background/80">
             {/* Hero Section */}
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 md:pt-10 md:pb-20">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-10 md:pt-10 md:pb-20">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -274,7 +274,7 @@ export default function Home() {
                     viewport={{ once: true }}
                     className="max-w-4xl mx-auto"
                 >
-                    <div className="flex flex-col md:flex-row items-center gap-12">
+                    <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12">
                         <div className="flex-1">
                             <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
                                 <Trophy className="w-8 h-8 text-primary" />
@@ -300,10 +300,10 @@ export default function Home() {
                                 ))}
                             </ul>
                         </div>
-                        <div className="w-full md:w-80 h-80">
+                        <div className="w-full md:w-80 h-60 md:h-80 flex items-center justify-center">
                             <LottieAnimation
                                 path="/Lottie/graphical-transformation.json"
-                                className="w-full h-full"
+                                className="w-4/5 md:w-full h-full"
                             />
                         </div>
                     </div>

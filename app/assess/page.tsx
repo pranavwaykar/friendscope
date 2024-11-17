@@ -54,14 +54,14 @@ const QuestionOption = ({ value, label, id, isSelected }: {
 
     return (
         <motion.div
-            className="flex-1 text-center relative"
+            className="flex-1 text-center relative min-w-0"
             initial={{opacity: 0, y: 20}}
             animate={{opacity: 1, y: 0}}
             transition={{duration: 0.3}}
         >
             {/*<div className="flex flex-col items-center gap-2">*/}
             <div className={`
-                flex flex-col items-center gap-2 p-2 rounded-lg transition-all duration-300
+                flex flex-col items-center gap-1 md:gap-2 p-1 md:p-2 rounded-lg transition-all duration-300
                 ${isSelected ? 'bg-blue-50' : 'hover:bg-gray-50'}
             `}>
                 <div className="relative">
@@ -69,7 +69,7 @@ const QuestionOption = ({ value, label, id, isSelected }: {
                         value={value}
                         id={id}
                         className={`
-                            h-6 w-6 transition-all duration-300
+                            h-4 w-4 md:h-6 md:w-6 transition-all duration-300
                             ${isSelected ?
                                 'border-primary bg-primary scale-110 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground' :
                                 'hover:border-primary/50'
@@ -82,7 +82,7 @@ const QuestionOption = ({ value, label, id, isSelected }: {
                             animate={{scale: 1}}
                             className="absolute -top-1 -right-1"
                         >
-                            <CheckCircle2 className="w-4 h-4 text-primary"/>
+                            <CheckCircle2 className="w-3 h-3 md:w-4 md:h-4 text-primary"/>
                         </motion.div>
                     )}
                     <FireworkAnimation show={showFirework}/>
@@ -90,11 +90,12 @@ const QuestionOption = ({ value, label, id, isSelected }: {
                 <Label
                     htmlFor={id}
                     className={`
-                        cursor-pointer text-sm transition-colors duration-300
+                        cursor-pointer text-xs md:text-sm transition-colors duration-300
                         ${isSelected ?
                             'text-primary font-medium' :
                             'text-muted-foreground hover:text-primary/80'
                         }
+                        text-ellipsis max-w-[60px] md:max-w-full
                     `}
                 >
                     {label}
@@ -198,11 +199,13 @@ export default function AssessmentPage() {
                                 <RadioGroup
                                     value={selectedAnswer}
                                     onValueChange={handleAnswer}
-                                    className="grid grid-cols-2 gap-8 md:flex md:gap-4"
+                                    className="grid grid-cols-1 gap-4 md:flex md:gap-4 px-2 md:px-4"
                                 >
-                                    <div className="flex justify-between items-center w-full">
-                                        <div className="text-sm font-medium text-primary">Agree</div>
-                                        <div className="flex-1 flex justify-between px-4">
+                                    <div className="flex flex-col md:flex-row justify-between items-center w-full gap-2 md:gap-4">
+                                        <div className="text-sm font-medium text-primary w-full md:w-auto text-center md:text-left">
+                                            Agree
+                                        </div>
+                                        <div className="flex flex-row md:flex-1 justify-between w-full px-2 md:px-4 gap-1 md:gap-4">
                                             {currentQuestion.options.map((option, index) => (
                                                 <QuestionOption
                                                     key={index}
@@ -213,7 +216,9 @@ export default function AssessmentPage() {
                                                 />
                                             ))}
                                         </div>
-                                        <div className="text-sm font-medium text-primary">Disagree</div>
+                                        <div className="text-sm font-medium text-primary w-full md:w-auto text-center md:text-right">
+                                            Disagree
+                                        </div>
                                     </div>
                                 </RadioGroup>
                             </motion.div>
