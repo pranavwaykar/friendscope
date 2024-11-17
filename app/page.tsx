@@ -267,7 +267,7 @@ export default function Home() {
             </motion.div>
 
             {/* Why Use FriendScope Section */}
-            <div className="container mx-auto px-4 py-24">
+            <div className="container mx-auto px-4 py-12 md:py-16 mb-8 md:mb-16">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -275,7 +275,7 @@ export default function Home() {
                     className="max-w-4xl mx-auto"
                 >
                     <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12">
-                        <div className="flex-1">
+                        <div className="flex-1 mb-4 md:mb-0">
                             <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
                                 <Trophy className="w-8 h-8 text-primary" />
                                 Why Use FriendScope?
@@ -300,11 +300,13 @@ export default function Home() {
                                 ))}
                             </ul>
                         </div>
-                        <div className="w-full md:w-80 h-60 md:h-80 flex items-center justify-center">
-                            <LottieAnimation
-                                path="/Lottie/graphical-transformation.json"
-                                className="w-4/5 md:w-full h-full"
-                            />
+                        <div className="w-full md:w-80 h-48 md:h-80 flex items-center justify-center mb-8 md:mb-0">
+                            <div className="w-3/5 md:w-full h-full">
+                                <LottieAnimation
+                                    path="/Lottie/graphical-transformation.json"
+                                    className="w-4/5 md:w-full h-full"
+                                />
+                            </div>
                         </div>
                     </div>
                 </motion.div>

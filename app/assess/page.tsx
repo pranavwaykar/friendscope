@@ -54,7 +54,7 @@ const QuestionOption = ({ value, label, id, isSelected }: {
 
     return (
         <motion.div
-            className="flex-1 text-center relative min-w-0"
+            className="flex-1 text-center relative min-w-0 max-w-[80px] md:max-w-[100px]"
             initial={{opacity: 0, y: 20}}
             animate={{opacity: 1, y: 0}}
             transition={{duration: 0.3}}
@@ -150,7 +150,7 @@ export default function AssessmentPage() {
     }
 
     return (
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 lg:py-12 max-w-3xl relative">
+        <div className="container mx-auto px-4 py-8 max-w-4xl md:max-w-5xl relative">
             {/* Interactive Star Animation */}
             <div className="absolute -left-32 top-1/5 w-64 h-64 z-10 opacity-90 pointer-events-none">
                 <LottieAnimation
@@ -199,13 +199,13 @@ export default function AssessmentPage() {
                                 <RadioGroup
                                     value={selectedAnswer}
                                     onValueChange={handleAnswer}
-                                    className="grid grid-cols-1 gap-4 md:flex md:gap-4 px-2 md:px-4"
+                                    className="grid grid-cols-1 gap-4 md:flex md:gap-4 px-2 md:px-4 max-w-full overflow-hidden"
                                 >
                                     <div className="flex flex-col md:flex-row justify-between items-center w-full gap-2 md:gap-4">
-                                        <div className="text-sm font-medium text-primary w-full md:w-auto text-center md:text-left">
+                                        <div className="text-sm font-medium text-primary w-full md:w-24 text-center md:text-left">
                                             Agree
                                         </div>
-                                        <div className="flex flex-row md:flex-1 justify-between w-full px-2 md:px-4 gap-1 md:gap-4">
+                                        <div className="flex flex-row md:flex-1 justify-between w-full max-w-[600px] px-2 md:px-4 gap-1 md:gap-4">
                                             {currentQuestion.options.map((option, index) => (
                                                 <QuestionOption
                                                     key={index}
@@ -216,7 +216,7 @@ export default function AssessmentPage() {
                                                 />
                                             ))}
                                         </div>
-                                        <div className="text-sm font-medium text-primary w-full md:w-auto text-center md:text-right">
+                                        <div className="text-sm font-medium text-primary w-full md:w-24 text-center md:text-right">
                                             Disagree
                                         </div>
                                     </div>
