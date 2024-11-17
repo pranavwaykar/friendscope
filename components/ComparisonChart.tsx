@@ -147,7 +147,7 @@ export function ComparisonChart({ data }: ComparisonChartProps) {
             },
             animations: {
                 enabled: true,
-                easing: 'easeinout',
+                easing: 'easeinout' as const,
                 speed: 800,
                 animateGradually: {
                     enabled: true,
