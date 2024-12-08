@@ -1,42 +1,75 @@
-# FriendScope
+<div align="center">
+ <h1><img src="public/friendscope-logo.svg" width="80px"><br/>FriendScope - Scientific Friendship Assessment Tool</h1>
+ <a href="https://friendscope.vercel.app" target="_blank"><img alt="" src="https://img.shields.io/badge/View_Demo-blue?style=for-the-badge" style="vertical-align:center" /></a>
+ <img src="https://img.shields.io/badge/Next.js-15.0-black?style=for-the-badge&logo=next.js"/>
+ <img src="https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript"/> 
+ <img src="https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css"/>
+ <img src="https://img.shields.io/badge/License-MIT-brightgreen?style=for-the-badge"/>
+</div>
 
-FriendScope is a modern web application designed to help individuals evaluate and strengthen their friendships through scientific assessment and personalized insights. Built with Next.js and TypeScript, it offers a sophisticated yet user-friendly interface for examining different aspects of interpersonal relationships.
+<br/>
 
-## ✨ Key Features
+# ✨ Key Features
 
-- 🔍 **Scientific Assessment**: Comprehensive questionnaire based on psychological research
-- 📊 **Visual Analytics**: Interactive charts showing different aspects of friendship
-- 🎯 **Personalized Insights**: Tailored recommendations based on assessment results
-- 🔐 **Privacy-Focused**: No account required, data stored locally
-- 💫 **Elegant UI**: Smooth animations and responsive design
-- 📱 **Cross-Platform**: Seamless experience across all devices
+### 🔍 Scientific Assessment
+- Comprehensive questionnaire based on psychological research
+- Evaluates 10 key aspects of friendship including trust, communication, and emotional support
+- Evidence-based scoring and analysis
+
+### 📊 Visual Analytics
+- Interactive charts showing different aspects of friendship
+- Real-time visualization of assessment results
+- Historical trend analysis and comparisons
+
+### 🎯 Personalized Insights
+- Tailored recommendations based on assessment results
+- Detailed analysis of friendship strengths and areas for improvement
+- Scientific explanations for all recommendations
+
+### 🔐 Privacy-First
+- No account required
+- All data stored locally
+- Complete anonymity in assessments
+
+### 💫 Modern UX/UI
+- Smooth animations and transitions
+- Interactive and responsive design
+- Intuitive user flow
+
+### 📱 Cross-Platform
+- Fully responsive design
+- Works on all modern browsers
+- Optimized for both desktop and mobile
 
 ## 🛠️ Tech Stack
 
+### Core
 - **Framework**: Next.js 15 with TypeScript
 - **Styling**: Tailwind CSS
 - **UI Components**: shadcn/ui
 - **State Management**: Zustand with persist middleware
-- **Data Visualization**: Recharts
+
+### Visualization
+- **Charts**: Recharts, Apexcharts
 - **Animations**: Framer Motion
 - **Icons**: Lucide React
-- **Additional Libraries**: 
-  - date-fns for date handling
-  - jsPDF for PDF generation
-  - Lottie for animations
+- **Motion Graphics**: Lottie Animations
+
+### Additional Libraries
+- **Date Handling**: date-fns
+- **PDF Generation**: jsPDF
+- **UUID Generation**: uuid
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-
 - Node.js (version 18.17.0 or higher)
 - npm or yarn
 
 ### Installation
-
 ```bash
 # Clone the repository
-git clone https://github.com/ChanMeng666/friendscope.git
+git clone https://github.com/username/friendscope.git
 cd friendscope
 
 # Install dependencies
@@ -53,7 +86,6 @@ yarn dev
 Visit [http://localhost:3000](http://localhost:3000) to see the application.
 
 ## 📁 Project Structure
-
 ```
 friendscope/
 ├── app/                 # Next.js app directory
@@ -69,17 +101,35 @@ friendscope/
 └── public/            # Static assets
 ```
 
-## ⚙️ Core Features
+## ⚙️ Core Features Explained
 
-- **Scientific Assessment**: Evaluates 10 key aspects of friendship including trust, communication, and emotional support
-- **Visual Insights**: Radar charts and trend analysis for comprehensive understanding
-- **Progress Tracking**: Historical data visualization and comparison tools
-- **Exportable Results**: PDF export functionality for assessment results
-- **Responsive Design**: Optimized for both desktop and mobile devices
+### Scientific Assessment Process
+- Evaluates 10 key aspects of friendship
+- Research-based questionnaire design
+- Complex scoring algorithms
+- Personalized result analysis
+
+### Visualization System
+- Radar charts for aspect analysis
+- Trend visualization for progress tracking
+- Interactive data exploration
+- Comparative analysis tools
+
+### Data Management
+- Local storage system
+- Export functionality (PDF/SVG)
+- Historical tracking
+- Progress monitoring
+
+### User Experience
+- Smooth transitions
+- Responsive design
+- Intuitive navigation
+- Real-time feedback
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
@@ -93,12 +143,20 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- UI components based on [shadcn/ui](https://ui.shadcn.com/)
-- Design inspiration from various friendship assessment tools
-- Icon library provided by [Lucide](https://lucide.dev/)
+- UI components inspired by [shadcn/ui](https://ui.shadcn.com/)
+- Icons provided by [Lucide](https://lucide.dev/)
+- Animation assets from [LottieFiles](https://lottiefiles.com/)
 
 ## Author
 
 **Chan Meng**
 - LinkedIn: [chanmeng666](https://www.linkedin.com/in/chanmeng666/)
 - GitHub: [ChanMeng666](https://github.com/ChanMeng666)
+
+## ⚡ Tech Used
+![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Framer](https://img.shields.io/badge/Framer-black?style=for-the-badge&logo=framer&logoColor=blue)
+![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
