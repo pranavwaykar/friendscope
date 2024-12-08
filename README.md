@@ -22,8 +22,6 @@
 
 ![screencapture-friendscope-vercel-app-history-2024-12-08-18_46_52](https://github.com/user-attachments/assets/94166400-c1c7-4e7f-8a70-b268385e4b99)
 
-![Uploading screencapture-friendscope-vercel-app-results-bea73cb1-a8f1-4fdf-8902-c3ba31b18b73-2024-12-08-18_47_07 (1).png…]()
-
 
 # ✨ Key Features
 
