@@ -70,7 +70,7 @@
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/username/friendscope.git
+git clone https://github.com/ChanMeng666/friendscope.git
 cd friendscope
 
 # Install dependencies
