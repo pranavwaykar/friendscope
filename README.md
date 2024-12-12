@@ -5,7 +5,7 @@
  <img src="https://img.shields.io/badge/Next.js-15.0-black?style=for-the-badge&logo=next.js"/>
  <img src="https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript"/> 
  <img src="https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css"/>
- <img src="https://img.shields.io/badge/License-MIT-brightgreen?style=for-the-badge"/>
+ <img src="https://img.shields.io/badge/License-GPL-3.0-brightgreen?style=for-the-badge"/>
 </div>
 
 <br/>
