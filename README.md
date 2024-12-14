@@ -10,6 +10,10 @@
 
 <br/>
 
+
+https://github.com/user-attachments/assets/a034cb2a-2a8b-4901-b2b7-5c31a9ae32e1
+
+
 ![screencapture-friendscope-vercel-app-2024-12-08-18_43_27](https://github.com/user-attachments/assets/edc744f6-db8c-4917-81b3-a63bbf18b19f)
 
 ![screencapture-friendscope-vercel-app-about-2024-12-06-01_34_54](https://github.com/user-attachments/assets/da43cb34-a1ef-47d3-aa89-c2e0cea6d778)
