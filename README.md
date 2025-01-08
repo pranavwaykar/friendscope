@@ -10,6 +10,11 @@
 
 <br/>
 
+<br/>
+
+[![Explore GitHub Profile README Generator](https://gradient-svg-generator.vercel.app/?text=👉+Try+It+Now!+👈&height=40&template=pride-rainbow)](https://friendscope.vercel.app/)
+
+<br/>
 
 https://github.com/user-attachments/assets/a034cb2a-2a8b-4901-b2b7-5c31a9ae32e1
 
