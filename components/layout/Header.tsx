@@ -70,7 +70,7 @@ export function Header() {
                         />
                     </div>
 
-                    {/* 标题 - 带动画效果，在移动端隐藏文字 Logo */}
+                    
                     <div className="hidden md:block relative group">
                         <motion.span
                             initial={{ opacity: 0, x: -20 }}
