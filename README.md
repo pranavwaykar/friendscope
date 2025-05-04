@@ -172,9 +172,9 @@ This project is licensed under the GPL-3.0 license - see the [GPL-3.0 license](L
 
 ## Author
 
-**Chan Meng**
-- LinkedIn: [chanmeng666](https://www.linkedin.com/in/chanmeng666/)
-- GitHub: [ChanMeng666](https://github.com/ChanMeng666)
+**Pranav Waykar**
+- LinkedIn: [pranavwaykar](https://www.linkedin.com/in/pranavwaykar/)
+- GitHub: [pranavwaykar](https://github.com/pranavwaykar)
 
 ## ⚡ Tech Used
 ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)

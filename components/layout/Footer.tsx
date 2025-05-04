@@ -11,7 +11,7 @@ export function Footer() {
         <footer className="bg-background border-t">
             <div className="container py-6 flex flex-col items-center justify-center space-y-2">
                 <div className="text-sm text-muted-foreground">
-                    © {currentYear} FriendScope. All rights reserved.
+                    © {currentYear} Frendity. All rights reserved.
                 </div>
                 <AnimatePresence>
                     <motion.div
@@ -44,7 +44,7 @@ export function Footer() {
                             rel="noopener noreferrer"
                             className="text-primary hover:text-primary/80 transition-colors font-medium hover:underline"
                         >
-                            Chan Meng
+                            Pranav Waykar
                         </Link>
                     </motion.div>
                 </AnimatePresence>
