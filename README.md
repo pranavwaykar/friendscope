@@ -1,5 +1,5 @@
 <div align="center">
- <h1><img src="public/friendscope-logo.svg" width="80px"><br/>FriendScope</h1>
+ <h1><img src="public/friendscope-logo.svg" width="80px"><br/>Friendity</h1>
  <h3>Scientific Friendship Assessment Tool</h3>
  <a href="https://friendscope.vercel.app" target="_blank"><img alt="" src="https://img.shields.io/badge/View_Demo-blue?style=for-the-badge" style="vertical-align:center" /></a>
  <img src="https://img.shields.io/badge/Next.js-15.0-black?style=for-the-badge&logo=next.js"/>
