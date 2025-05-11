@@ -16,6 +16,16 @@
 
 # ✨ Key Features
 
+### Screenshot
+
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/e30eb2ea-0a39-4ef8-9822-f5d15c5ec7b0" />
+
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/a62a18a0-a148-4c8e-baa1-d3aacb92d849" />
+
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/7306a0a8-b9f5-4371-b92b-b8eb46e8c50b" />
+
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/2a7ed56a-11e8-4799-987c-ea5af8834787" />
+
 ### 🔍 Scientific Assessment
 - Comprehensive questionnaire based on psychological research
 - Evaluates 10 key aspects of friendship including trust, communication, and emotional support
