@@ -12,25 +12,8 @@
 
 <br/>
 
-[![👉Try It Now!👈](https://gradient-svg-generator.vercel.app/api/svg?text=%F0%9F%91%89Try%20It%20Now!%F0%9F%91%88&color=000000&height=60&gradientType=radial&duration=6s&color0=ffffff&template=pride-rainbow)](https://friendscope.vercel.app/)
 
 <br/>
-
-https://github.com/user-attachments/assets/a034cb2a-2a8b-4901-b2b7-5c31a9ae32e1
-
-
-![screencapture-friendscope-vercel-app-2024-12-08-18_43_27](https://github.com/user-attachments/assets/edc744f6-db8c-4917-81b3-a63bbf18b19f)
-
-![screencapture-friendscope-vercel-app-about-2024-12-06-01_34_54](https://github.com/user-attachments/assets/da43cb34-a1ef-47d3-aa89-c2e0cea6d778)
-
-![screencapture-friendscope-vercel-app-resources-2024-12-08-18_43_54](https://github.com/user-attachments/assets/2b4b37f5-4a76-4048-b459-812a13029840)
-
-![屏幕截图 2024-12-08 184432](https://github.com/user-attachments/assets/0f784cd2-f2a0-4a25-b38f-2f40b944afae)
-
-![screencapture-friendscope-vercel-app-results-2024-12-08-18_46_32](https://github.com/user-attachments/assets/a78fd693-67af-4254-831a-365525767d3c)
-
-![screencapture-friendscope-vercel-app-history-2024-12-08-18_46_52](https://github.com/user-attachments/assets/94166400-c1c7-4e7f-8a70-b268385e4b99)
-
 
 # ✨ Key Features
 
