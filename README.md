@@ -75,8 +75,8 @@
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/ChanMeng666/friendscope.git
-cd friendscope
+git clone https://github.com/ChanMeng666/friendity.git
+cd friendity
 
 # Install dependencies
 npm install
@@ -93,7 +93,7 @@ Visit [http://localhost:3000](http://localhost:3000) to see the application.
 
 ## 📁 Project Structure
 ```
-friendscope/
+friendity/
 ├── app/                 # Next.js app directory
 │   ├── about/          # About page
 │   ├── assess/         # Assessment flow
