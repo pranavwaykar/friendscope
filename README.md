@@ -1,5 +1,5 @@
 <div align="center">
- <h1><img src="public/friendscope-logo.svg" width="80px"><br/>Friendity</h1>
+ <h1><img src="public/friendscope-logo.svg" width="80px"><br/>friendscope</h1>
  <h3>Scientific Friendship Assessment Tool</h3>
  <img src="https://img.shields.io/badge/Next.js-15.0-black?style=for-the-badge&logo=next.js"/>
  <img src="https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript"/> 
@@ -84,8 +84,8 @@
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/ChanMeng666/friendity.git
-cd friendity
+git clone https://github.com/pranavwaykar/friendscope.git
+cd friendscope
 
 # Install dependencies
 npm install
@@ -102,7 +102,7 @@ Visit [http://localhost:3000](http://localhost:3000) to see the application.
 
 ## 📁 Project Structure
 ```
-friendity/
+friendscope/
 ├── app/                 # Next.js app directory
 │   ├── about/          # About page
 │   ├── assess/         # Assessment flow

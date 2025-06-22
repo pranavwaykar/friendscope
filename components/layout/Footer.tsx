@@ -11,7 +11,7 @@ export function Footer() {
         <footer className="bg-background border-t">
             <div className="container py-6 flex flex-col items-center justify-center space-y-2">
                 <div className="text-sm text-muted-foreground">
-                    © {currentYear} Frendity. All rights reserved.
+                    © {currentYear} friendscope. All rights reserved.
                 </div>
                 <AnimatePresence>
                     <motion.div
